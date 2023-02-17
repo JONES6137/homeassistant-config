@@ -1,0 +1,433 @@
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# theme related
+frontend:
+  themes: !include_dir_merge_named themes
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+# automations/scripts/scenes
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+python_script:
+
+cloud:
+
+wake_on_lan:
+
+browser_mod:
+
+calendar:
+  - platform: todoist
+    token: !secret token_todoist
+
+bhyve:
+  username: !secret outlook_email
+  password: !secret pw_X!
+
+# https://www.home-assistant.io/integrations/manual/
+alarm_control_panel:
+  - platform: manual
+    name: Rose Guard
+    code: !secret security_code
+    code_arm_required: False
+    disarm_after_trigger: False
+    arming_time: 10 # seconds delay from when alarm is activated
+    delay_time: 30 # seconds delay from when alarm was triggered
+    trigger_time: 600
+    disarmed:
+      trigger_time: 0
+    armed_home:
+      delay_time: 0
+      trigger_time: 0
+    armed_away:
+      arming_time: 60
+    armed_night:
+      delay_time: 0
+    armed_vacation:
+      arming_time: 60
+    armed_custom_bypass:
+      arming_time: 0
+      delay_time: 0
+
+# device proximity sensor
+proximity:
+  home_2:
+    devices:
+      - device_tracker.dj_iphone_12
+    tolerance: 1
+    unit_of_measurement: mi
+
+  proximity_home_dj:
+    zone: home_2
+    devices:
+      - device_tracker.dj_iphone_12
+    tolerance: 1
+    unit_of_measurement: mi
+
+  proximity_home_iss:
+    zone: home_2
+    devices:
+      - sensor.iss
+    tolerance: 1
+    unit_of_measurement: mi
+
+# garage door cover entity
+cover:
+  - platform: template
+    covers:
+      garage_door:
+        device_class: garage
+        friendly_name: "Garage Door"
+        value_template: >-
+          {% if is_state('binary_sensor.garage_door_tilt_sensor_any','on') %}
+            Open
+          {% else %}
+            Closed
+          {% endif %}
+        open_cover:
+          service: switch.turn_on
+          data:
+            entity_id: switch.multirelay1_garage_door
+        close_cover:
+          service: switch.turn_on
+          data:
+            entity_id: switch.multirelay1_garage_door
+        stop_cover:
+          service: switch.turn_on
+          data:
+            entity_id: switch.multirelay1_garage_door
+        icon_template: >-
+          {% if is_state('binary_sensor.garage_door_tilt_sensor_any','on') %}
+            mdi:garage-open-variant
+          {% else %}
+            mdi:garage-variant
+          {% endif %}
+
+######################################################
+# Time from last change in minutes
+# Divide minutes by 30
+# For loop (24 hours = 48 half hours)
+# If minutes divided by 30 equals a whole number
+# Set state of the sensor to 'open'
+######################################################
+sensor:
+  - platform: time_date
+    display_options:
+      - "time"
+      - "date"
+      - "date_time"
+      - "time_date"
+      - "date_time_iso"
+
+  - platform: bhyve
+
+template:
+  - sensor:
+      - name: "Time_14hr"
+        state: "{{ as_timestamp(states('sensor.date_time_iso')) | timestamp_custom(' %I:%M %p') | replace(' 0', '') }}"
+        icon: "mdi:calendar-clock"
+      - name: "Datetime_long"
+        state: "{{ as_timestamp(states('sensor.date_time_iso')) | timestamp_custom('%A %B %-d, %I:%M %p') }}"
+        icon: "mdi:calendar-clock"
+
+binary_sensor:
+  - platform: bhyve
+
+  - platform: workday
+    country: US
+    workdays: [mon, tue, wed, thu, fri]
+    excludes: [sat, sun, holiday]
+
+# switches
+switch:
+  # sprinkler config
+  - platform: bhyve
+    # basement light template
+  # - platform: template
+  #   switches:
+  #     doors_secured:
+  #       unique_id: "doors_secured"
+  #       friendly_name: "doors_secured"
+  #       value_template: >-
+  #         {% if
+  #           is_state('lock.front_door_lock','unlocked') or
+  #           is_state('cover.garage_door','open') or
+  #           is_state('binary_sensor.back_door_sensor_zse41','on') or
+  #           is_state('binary_sensor.front_door_sensor_zse41','on')
+  #         %}
+  #           Off
+  #         {% else %}
+  #           On
+  #         {% endif %}
+  #       turn_on:
+  #         - service: input_boolean.turn_on
+  #           target:
+  #             entity_id: input_boolean.toggle_rose_guard_door_access_status
+  #       turn_off:
+  #         - service: input_boolean.turn_off
+  #           target:
+  #             entity_id: input_boolean.toggle_rose_guard_door_access_status
+  #       icon_template: >-
+  #         {% if
+  #           is_state('input_boolean.toggle_rose_guard_door_access_status','on')
+  #         %}
+  #           mdi:home-lock
+  #         {% else %}
+  #           mdi:home-lock-open
+  #         {% endif %}
+  - platform: template
+    switches:
+      bm_lights_template:
+        unique_id: "bm_lights_template"
+        friendly_name: "Room Lights: Basement"
+        value_template: >-
+          {% if 
+            is_state('light.wiz_rgbww_tunable_dfab4e','on') or
+            is_state('light.basement_light','on')
+          %}
+            On
+          {% else %}
+            Off
+          {% endif %}
+        turn_on:
+          - service: scene.turn_on
+            target:
+              entity_id: scene.bm_warm
+        turn_off:
+          - service: scene.turn_on
+            target:
+              entity_id: scene.bm_off
+        icon_template: >-
+          {% if 
+            is_state('light.wiz_rgbww_tunable_dfab4e','on') or
+            is_state('light.basement_light','on')
+          %}
+            mdi:lightbulb-multiple
+          {% else %}
+            mdi:lightbulb-multiple-off-outline
+          {% endif %}
+    # living room light template
+  - platform: template
+    switches:
+      lr_lights_template:
+        unique_id: "lr_lights_template"
+        friendly_name: "Room Lights: Living Room"
+        value_template: >-
+          {% if 
+              is_state('light.lr_smart_lights','on')
+          %}
+            On
+          {% else %}
+            Off
+          {% endif %}
+        turn_on:
+          - service: scene.turn_on
+            target:
+              entity_id: scene.lr_warm
+        turn_off:
+          - service: scene.turn_on
+            target:
+              entity_id: scene.lr_lights_off
+        icon_template: >-
+          {% if 
+            is_state('light.lr_smart_lights','on')
+          %}
+            mdi:lightbulb-multiple
+          {% else %}
+            mdi:lightbulb-multiple-off-outline
+          {% endif %}
+  - platform: template
+    switches:
+      office_lights_template:
+        unique_id: "office_lights_template"
+        friendly_name: "Room Lights: Office"
+        value_template: >-
+          {% if 
+              is_state('light.wiz_rgbw_tunable_245b37','on') or
+              is_state('light.office_light_switch_zen27','on')
+          %}
+            On
+          {% else %}
+            Off
+          {% endif %}
+        turn_on:
+          - service: scene.turn_on
+            target:
+              entity_id: scene.office_warm
+        turn_off:
+          - service: scene.turn_on
+            target:
+              entity_id: scene.office_off
+        icon_template: >-
+          {% if 
+              is_state('light.wiz_rgbw_tunable_245b37','on') or
+              is_state('light.office_light_switch_zen27','on')
+          %}
+            mdi:lightbulb-multiple
+          {% else %}
+            mdi:lightbulb-multiple-off-outline
+          {% endif %}
+    # kitchen light template
+  - platform: template
+    switches:
+      kn_lights_template:
+        unique_id: "kn_lights_template"
+        friendly_name: "Room Lights: Kitchen"
+        value_template: >-
+          {% if 
+              is_state('light.kitchen_light_switch_zen72','on') or
+              is_state('light.kn_sink_smart_lights','on')
+          %}
+            On
+          {% else %}
+            Off
+          {% endif %}
+        turn_on:
+          - service: scene.turn_on
+            target:
+              entity_id: scene.kn_warm
+        turn_off:
+          - service: scene.turn_on
+            target:
+              entity_id: scene.kn_off
+        icon_template: >-
+          {% if 
+              is_state('light.kitchen_light_switch_zen72','on') or
+              is_state('light.kn_sink_smart_lights','on')
+          %}
+            mdi:lightbulb-multiple
+          {% else %}
+            mdi:lightbulb-multiple-off-outline
+          {% endif %}
+    # my room light template
+  - platform: template
+    switches:
+      dj_lights_template:
+        friendly_name: "Room Lights: DJ"
+        unique_id: "dj_lights_template"
+        value_template: >-
+          {% if 
+              is_state('light.wiz_rgbw_tunable_245cc9','on') or
+              is_state('light.my_bedroom_light','on')
+          %}
+            On
+          {% else %}
+            Off
+          {% endif %}
+        turn_on:
+          - service: scene.turn_on
+            target:
+              entity_id: scene.b4_warm
+        turn_off:
+          - service: scene.turn_on
+            target:
+              entity_id: scene.b4_off
+        icon_template: >-
+          {% if 
+              is_state('light.wiz_rgbw_tunable_245cc9','on') or
+              is_state('light.my_bedroom_light','on')
+          %}
+            mdi:lightbulb-multiple
+          {% else %}
+            mdi:lightbulb-multiple-off-outline
+          {% endif %}
+  - platform: template
+    switches:
+      dj_lights_template:
+        friendly_name: "Room Lights: Bathroom1"
+        unique_id: "bathroom1_lights_template"
+        value_template: >-
+          {% if 
+              is_state('light.wiz_rgbw_tunable_08d336','on')
+          %}
+            On
+          {% else %}
+            Off
+          {% endif %}
+        turn_on:
+          - service: scene.turn_on
+            target:
+              entity_id: scene.br1_lamp_rhythm
+        turn_off:
+          - service: scene.turn_on
+            target:
+              entity_id: scene.ba1_off
+        icon_template: >-
+          {% if 
+              is_state('light.wiz_rgbw_tunable_08d336','on')
+          %}
+            mdi:lightbulb-multiple
+          {% else %}
+            mdi:lightbulb-multiple-off-outline
+          {% endif %}
+  # night light template
+  - platform: template
+    switches:
+      darkroom_lights_template:
+        friendly_name: "Lights: Darkroom"
+        unique_id: "house_darkroom_lights_template"
+        value_template: >-
+          {% if 
+            is_state('light.wiz_rgbw_tunable_453e0c','on') and
+            state_attr('light.wiz_rgbw_tunable_0909fa','brightness')|int == 66 and
+            state_attr('light.wiz_rgbww_tunable_dfab4e','brightness')|int == 66 
+          %}
+            On
+          {% else %}
+            Off
+          {% endif %}
+        turn_on:
+          - service: scene.turn_on
+            target:
+              entity_id: scene.house_darkroom_on
+        turn_off:
+          - service: scene.turn_on
+            target:
+              entity_id: scene.house_darkroom_off
+        icon_template: >-
+          {% if 
+            is_state('light.wiz_rgbw_tunable_453e0c','on') and
+            state_attr('light.wiz_rgbw_tunable_0909fa','brightness')|int == 66 and
+            state_attr('light.wiz_rgbww_tunable_dfab4e','brightness')|int == 66 
+          %}
+            mdi:lightbulb-multiple
+          {% else %}
+            mdi:lightbulb-multiple-off-outline
+          {% endif %}
+  - platform: template
+    switches:
+      dr_lights_template:
+        unique_id: "dr_lights_template"
+        friendly_name: "Room Lights: Dining Room"
+        value_template: >-
+          {% if 
+              is_state('light.kitchen_table_light','on') or
+              is_state('light.dining_room_lamp','on')
+          %}
+            On
+          {% else %}
+            Off
+          {% endif %}
+        turn_on:
+          - service: scene.turn_on
+            target:
+              entity_id: scene.dr_warm
+        turn_off:
+          - service: scene.turn_on
+            target:
+              entity_id: scene.dr_off
+        icon_template: >-
+          {% if 
+              is_state('light.kitchen_table_light','on') or
+              is_state('light.dining_room_lamp','on')
+          %}
+            mdi:lightbulb-multiple
+          {% else %}
+            mdi:lightbulb-multiple-off-outline
+          {% endif %}

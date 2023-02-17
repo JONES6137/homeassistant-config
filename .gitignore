@@ -1,0 +1,86 @@
+
+# Logs
+logs
+*.log
+# Python cache
+__pycache__
+*.pyc
+
+# Other
+home-assistant_v2.db
+home-assistant.log.1
+*.uuid
+*.conf
+*.db
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+*.log
+*.noload
+*.txt
+*.sqlite
+*.xml
+*.backup
+*.json
+life360.sh
+.ip_authenticated.yaml
+ip_bans.yaml
+.config_entries.json
+*.google.token
+.google.token
+.ring_cache.pickle
+.spotify-token-cache
+.storage
+abodepy_cache.pickle
+camera_recording.py
+home-assistant.env
+home-assistant.*
+known_devices.yaml
+entity_registry.yaml
+secrets.yaml
+google_calendars.yaml
+SERVICE_ACCOUNT.json
+components
+deps
+tts
+www/icons
+www/floorplans
+www/community
+custom_components/hacs
+downloads
+icloud
+dlib_faces
+dlib_nofaces
+dlib_known_faces
+dlib_unknown_faces
+.cloud
+*.pickle
+.pc-session
+google*.deb
+.homekit.state
+
+
+themes
+.bhyve
+appdaemon
+image
+govee_learning.yaml
+
+
+# # An * ensures that everything will be ignored.
+# *
+# You can whitelist files/folders with !, these will not be ignored.
+# !*.yaml
+!.gitignore
+!*.md
+# Ignore folders.
+.storage
+.cloud
+.google.token
+# Ensure these YAML files are ignored, otherwise your secret data/credentials will leak.
+ip_bans.yaml
+secrets.yaml
+known_devices.yaml
+configuration.yaml
+automations.yaml

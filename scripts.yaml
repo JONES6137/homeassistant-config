@@ -1,0 +1,213 @@
+"1654882354443":
+  alias: "Alexa: Play Song via Input"
+  sequence:
+    - service: media_player.play_media
+      target:
+        entity_id: media_player.damon_s_echo
+      data_template:
+        entity_id: media_player.damon_s_echo
+        media_content_id:
+          play {{ states('input_text.alexa_amzn_music_play_song_by_name')
+          }} on the everywhere group
+        media_content_type: custom
+  mode: single
+alexa_read_announcement:
+  alias: "Alexa: Read Announcement"
+  sequence:
+    - service: script.1669832041396
+      data:
+        alexa_entity: media_player.everywhere
+        message: "{{ states('input_text.alexa_speak_input_text') }}"
+  mode: single
+  icon: mdi:bullhorn
+sonos_tts_script:
+  alias: sonos_tts_script
+  sequence:
+    - service: sonos.snapshot
+      data:
+        entity_id: "{{ sonos_entity }}"
+    - service: sonos.unjoin
+      data:
+        entity_id: "{{ sonos_entity }}"
+    - service: media_player.volume_set
+      data:
+        entity_id: "{{ sonos_entity }}"
+        volume_level: "{{ volume }}"
+    - service: tts.google_translate_say
+      data:
+        entity_id: "{{ sonos_entity }}"
+        message: "{{ message }}"
+    - delay: "{{ delay }}"
+    - service: sonos.restore
+      data:
+        entity_id: "{{ sonos_entity }}"
+  mode: queued
+  icon: mdi:bullhorn
+"1669832041396":
+  alias: notify_via_alexa
+  sequence:
+    - service: notify.alexa_media
+      data:
+        message: "{{ message }}"
+        data:
+          type: announce
+        target: "{{ alexa_entity }}"
+  mode: single
+  icon: mdi:bullhorn
+"1670440191524":
+  alias: activate_grandfather_clock
+  fields:
+    activation_announcement:
+      name: activation_announcement
+      description: Whether grandfather clock should announce activation (true/false)
+      example: idk
+      default: "false"
+    interval:
+      description: The minute interval to make time announcements
+      example: "15"
+      default: 60
+  sequence:
+    - choose:
+        - conditions: "{{ activation_announcement == 'true' }}"
+          sequence:
+            - service: automation.turn_on
+              data: {}
+              target:
+                entity_id: automation.grandfatherclock_dynamic_activation
+      default:
+        - service: automation.turn_off
+          data: {}
+          target:
+            entity_id: automation.grandfatherclock_dynamic_activation
+    - service: input_number.set_value
+      data:
+        value: " {{ interval }} "
+      target:
+        entity_id: input_number.grandfatherclock_interval_minutes
+    - service: automation.turn_on
+      data: {}
+      target:
+        entity_id: automation.grandfatherclock_dynamic
+important_announcement:
+  alias: Important Notification Handler
+  fields:
+    message_title:
+      name: Title
+      description: (used for ha persistent notifications and ios notifications)
+      example: Danger!
+      required: true
+      selector:
+        text:
+    message:
+      name: Message
+      description: message to announce over intercom...
+      example: garage door open!
+      required: true
+      selector:
+        text:
+    alexa_announcement:
+      name: Announce Message over Alexa
+      description: Announce message over Alexa (if important notificaions are enabled)
+      example: false
+      required: true
+      selector:
+        boolean:
+    alexa_override:
+      name: Alexa Override
+      description: Overrides currently configured notificaiton setting
+      example: false
+      required: true
+      selector:
+        boolean:
+    persistent_notification_toggle:
+      name: Persistent notification
+      description: Displays message in HA notifications panel
+      example: false
+      required: true
+      selector:
+        boolean:
+    phone_notification_toggle:
+      name: Phone push notification
+      description: Send push notification to my phone
+      example: false
+      required: true
+      selector:
+        boolean:
+    sentry_mode_toggle:
+      name: Sentry mode announcement
+      description:
+        Announce Message over Alexa IF Rose Guard is Armed for Night or
+        Home
+      example: false
+      required: true
+      selector:
+        boolean:
+  sequence:
+    - if:
+        - alias: If alexa announcement is toggled ON
+          condition: template
+          value_template: "{{ alexa_announcement == true }}"
+      then:
+        - alias: Announce via Alexa if announcements/override are enabled
+          choose:
+            - conditions:
+                - condition: or
+                  conditions:
+                    - condition: state
+                      entity_id: input_boolean.toggle_important_alexa_announcement
+                      state: "on"
+                    - condition: template
+                      value_template: "{{ alexa_override == true }}"
+              sequence:
+                - service: notify.alexa_media
+                  data:
+                    message: "{{ message }}"
+                    data:
+                      type: announce
+                    target: media_player.everywhere
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ persistent_notification_toggle == true }}"
+          sequence:
+            - service: notify.persistent_notification
+              data:
+                title: "{{ message_title }}"
+                message: "{{ message }}"
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ phone_notification_toggle == true }}"
+          sequence:
+            - service: notify.mobile_app_dj_iphone_12
+              data:
+                title: "{{ message_title }}"
+                message: "{{ message }}"
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ sentry_mode_toggle == true }}"
+          sequence:
+            - if:
+                - condition: or
+                  conditions:
+                    - condition: state
+                      entity_id: alarm_control_panel.rose_guard
+                      state: armed_home
+                    - condition: state
+                      entity_id: alarm_control_panel.rose_guard
+                      state: armed_night
+                  alias: If Rose Guard is Armed (night or home only)
+              then:
+                - service: notify.alexa_media
+                  data:
+                    message: "{{ message }}"
+                    data:
+                      type: announce
+                    target: media_player.everywhere
+    - service: notify.lg_webos_smart_tv
+      data:
+        title: "{{ message_title }}"
+        message: " {{ message }} "
+  mode: single
+  icon: mdi:bullhorn
