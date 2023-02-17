@@ -1,0 +1,4744 @@
+- id: "1649471721911"
+  alias: Basement Light Switch Scene Controller (zen32)
+  description: ""
+  use_blueprint:
+    path: Matt-PMCT/ZoozZen32forZwaveJs.yaml
+    input:
+      zooz_switch: 21ce4d1395977d5c215f407b3c091b12
+      scene_5:
+        - service: switch.toggle
+          data: {}
+          target:
+            entity_id: switch.bm_lights_template
+      scene_1:
+        - type: toggle
+          device_id: 21ce4d1395977d5c215f407b3c091b12
+          entity_id: light.basement_light
+          domain: light
+      scene_2:
+        - service: automation.trigger
+          data:
+            skip_condition: false
+          target:
+            entity_id: automation.scene_movies
+      scene_4:
+        - service: scene.turn_on
+          target:
+            entity_id: scene.bm_all_off
+          metadata: {}
+      scene_42:
+        - service: automation.trigger
+          data: {}
+          target:
+            entity_id: automation.scene_interior_lights_off
+      scene_22: []
+      scene_3:
+        - service: automation.trigger
+          data:
+            skip_condition: false
+          target:
+            entity_id: automation.scene_warm_lights
+      scene_52:
+        - service: scene.turn_on
+          target:
+            entity_id: scene.bm_bright
+          metadata: {}
+      scene_53: []
+      scene_5h:
+        - service: automation.trigger
+          data:
+            skip_condition: false
+          target:
+            entity_id: automation.scene_interior_lights_on
+- id: "1649823816449"
+  alias: Living Room Outlet Switch Scene Controller (zen32)
+  description: ""
+  use_blueprint:
+    path: Matt-PMCT/ZoozZen32forZwaveJs.yaml
+    input:
+      zooz_switch: 01b5fdd74a3e0c5b30e075a2b519a65d
+      scene_1:
+        - service: automation.trigger
+          data: {}
+          target:
+            entity_id: automation.scene_warm_lights
+      scene_2:
+        - service: automation.trigger
+          data: {}
+          target:
+            entity_id: automation.scene_red_lights
+      scene_3:
+        - service: automation.trigger
+          data:
+            skip_condition: false
+          target:
+            entity_id: automation.scene_interior_lights_on
+      scene_5:
+        - service: switch.toggle
+          data: {}
+          target:
+            entity_id: switch.lr_lights_template
+      scene_4:
+        - service: automation.trigger
+          data:
+            skip_condition: false
+          target:
+            entity_id: automation.scene_interior_lights_off
+        - service: media_player.media_pause
+          data: {}
+          target:
+            entity_id: media_player.sonos_five
+      scene_42:
+        - service: automation.trigger
+          data:
+            skip_condition: false
+          target:
+            entity_id:
+              - automation.scene_all_lights_off
+        - service: media_player.media_pause
+          data: {}
+          target:
+            entity_id: media_player.sonos_five
+      scene_45:
+        - condition: numeric_state
+          entity_id: counter.counter_bedtime_protocol_self_destruct_procedure
+          above: "1"
+          below: "3"
+        - service: counter.configure
+          data:
+            value: 1
+          target:
+            entity_id: counter.counter_bedtime_protocol_self_destruct_procedure
+      scene_3h:
+        - condition: numeric_state
+          entity_id: counter.counter_bedtime_protocol_abort_procedure
+          above: "0"
+          below: "2"
+        - service: counter.configure
+          data:
+            value: 3
+          target:
+            entity_id: counter.counter_bedtime_protocol_abort_procedure
+      scene_32: []
+      scene_52:
+        - service: scene.turn_on
+          target:
+            entity_id: scene.lr_bright
+          metadata: {}
+      scene_53: []
+      scene_12:
+        - service: automation.trigger
+          data: {}
+          target:
+            entity_id:
+              - automation.scene_jazzy
+      scene_2h: []
+      scene_22:
+        - service: scene.turn_on
+          target:
+            entity_id: scene.ca_ocean
+          metadata: {}
+        - service: automation.trigger
+          data: {}
+          target:
+            entity_id: automation.scene_zin
+      scene_4h:
+        - service: automation.trigger
+          data: {}
+          target:
+            entity_id: automation.rose_guard_secure_home
+      scene_5h:
+        - service: automation.trigger
+          data: {}
+          target:
+            entity_id: automation.front_door_lock_unlock_and_lock_protocol
+- id: "1650352350509"
+  alias: sc_step_bm_scenes_dramatic
+  trigger:
+    - platform: state
+      entity_id: input_select.bm_scenes_dramatic
+  condition:
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: input_select.bm_scenes_dramatic
+          state: unknown
+  action:
+    - service: scene.turn_on
+      target:
+        entity_id:
+          '{{''scene.'' + states(''input_select.bm_scenes_dramatic'').replace("
+          ","_").lower()}}'
+- id: "1650597710349"
+  alias: sc_step_bm_scenes_ambient
+  description: ""
+  trigger:
+    - platform: state
+      entity_id: input_select.bm_scenes_ambient
+  condition:
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: input_select.bm_scenes_ambient
+          state: unknown
+  action:
+    - service: scene.turn_on
+      target:
+        entity_id:
+          '{{''scene.'' + states(''input_select.bm_scenes_ambient'').replace("
+          ","_").lower()}}'
+  mode: single
+- id: "1650599205488"
+  alias: sc_step_lr_scenes_whites
+  description: ""
+  trigger:
+    - platform: state
+      entity_id: input_select.lr_scenes_whites
+  condition:
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: input_select.lr_scenes_whites
+          state: unknown
+  action:
+    - service: scene.turn_on
+      target:
+        entity_id:
+          '{{''scene.'' + states(''input_select.lr_scenes_whites'').replace("
+          ","_").lower()}}'
+  mode: single
+- id: "1650599662811"
+  alias: sc_step_lr_scenes_ambient
+  description: ""
+  trigger:
+    - platform: state
+      entity_id: input_select.lr_scenes_ambient
+  condition:
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: input_select.lr_scenes_ambient
+          state: unknown
+  action:
+    - service: scene.turn_on
+      target:
+        entity_id:
+          '{{''scene.'' + states(''input_select.lr_scenes_ambient'').replace("
+          ","_").lower()}}'
+  mode: single
+- id: "1650602506029"
+  alias: sc_step_up_scenes_dramatic
+  description: ""
+  trigger:
+    - platform: state
+      entity_id: input_select.up_scenes_dramatic
+  condition:
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: input_select.up_scenes_dramatic
+          state: unknown
+  action:
+    - service: scene.turn_on
+      target:
+        entity_id:
+          '{{''scene.'' + states(''input_select.up_scenes_dramatic'').replace("
+          ","_").lower()}}'
+  mode: single
+- id: "1650937927745"
+  alias: "DJ: Goodbye"
+  description: ""
+  trigger:
+    - platform: zone
+      entity_id: person.damon_jones
+      zone: zone.driving_trigger
+      event: leave
+  condition:
+    - condition: state
+      entity_id: input_boolean.toggle_guest_mode
+      state: "off"
+    - condition: state
+      entity_id: proximity.proximity_home_dj
+      attribute: dir_of_travel
+      state: away_from
+      enabled: false
+  action:
+    - if:
+        - condition: state
+          entity_id: input_boolean.toggle_guest_mode
+          state: "off"
+      then:
+        - service: alarm_control_panel.alarm_arm_away
+          data:
+            code: !secret security_code
+          target:
+            entity_id: alarm_control_panel.rose_guard
+        - service: switch.turn_off
+          data: {}
+          target:
+            entity_id:
+              - switch.plug2_socket_1
+              - switch.plug3_socket_1
+              - switch.dr_heat
+              - switch.deck_light_switch_zen21
+        - service: automation.trigger
+          data: {}
+          target:
+            entity_id: automation.scene_interior_lights_off
+      else:
+        - service: automation.trigger
+          data: {}
+          target:
+            entity_id: automation.rose_guard_secure_home
+    - delay:
+        hours: 0
+        minutes: 15
+        seconds: 0
+        milliseconds: 0
+    - if:
+        - condition: state
+          entity_id: cover.garage_door
+          state: closed
+          for:
+            hours: 0
+            minutes: 10
+            seconds: 0
+        - condition: state
+          entity_id: person.damon_jones
+          state: not_home
+          for:
+            hours: 0
+            minutes: 10
+            seconds: 0
+      then:
+        - service: automation.turn_on
+          data: {}
+          target:
+            entity_id:
+              - automation.garage_door_auto_open
+              - automation.garage_door_autoclose_1hr
+  mode: queued
+- id: "1651452087553"
+  alias: Gym Light Switch Scene Controller (zen32)
+  description: ""
+  use_blueprint:
+    path: Matt-PMCT/ZoozZen32forZwaveJs.yaml
+    input:
+      zooz_switch: 356a8a9d501d1ffab6a3b14f05defda1
+      scene_1:
+        - type: toggle
+          device_id: 4e791aa1c185ae2be4c5e65ea2eb9d7b
+          entity_id: switch.dr_heat
+          domain: switch
+      scene_1h:
+        - type: turn_off
+          device_id: 4e791aa1c185ae2be4c5e65ea2eb9d7b
+          entity_id: switch.dr_heat
+          domain: switch
+      scene_2:
+        - type: toggle
+          device_id: 6c85d4740311ddd1bb2630e812cb65ea
+          entity_id: switch.deck_light_switch_zen21
+          domain: switch
+- id: "1651453506400"
+  alias: gym_heater_auto_off
+  trigger:
+    - platform: state
+      entity_id: switch.dr_heat
+      from: "off"
+      to: "on"
+      for:
+        hours: 2
+        minutes: 0
+        seconds: 0
+  condition: []
+  action:
+    - service: switch.turn_off
+      entity_id: switch.gym_light_switch_zen32
+  mode: single
+- id: "1651639514910"
+  alias: Garage door relay auto-off
+  description: ""
+  trigger:
+    - platform: device
+      type: turned_on
+      device_id: 18897582842d5bebbf630f7afc7f54cb
+      entity_id: switch.multirelay1_garage_door
+      domain: switch
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 3
+  condition: []
+  action:
+    - type: turn_off
+      device_id: 18897582842d5bebbf630f7afc7f54cb
+      entity_id: switch.multirelay1_garage_door
+      domain: switch
+  mode: single
+- id: "1651701159958"
+  alias: garage_door_open_30min_alert
+  description: ""
+  trigger:
+    - platform: state
+      entity_id: cover.garage_door
+      to: open
+      for:
+        hours: 0
+        minutes: 30
+        seconds: 0
+  condition:
+    - type: is_open
+      condition: device
+      device_id: b443584cb02d3dca27721f65af273b7a
+      entity_id: binary_sensor.garage_door_tilt_sensor_any
+      domain: binary_sensor
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 0
+  action:
+    - service: notify.mobile_app_dj_iphone_12
+      data:
+        title: Garage Door Alert
+        data:
+          message: Garage Door has been open for 30 minutes.
+          actions:
+            - action: ios_push_close_garage_door
+              title: Close Garage Door
+              destructive: true
+        message: Garage Door has been open for 30 minutes.
+    - type: turn_on
+      device_id: d409b8bb1dfb21cff04a3d3f60988a6a
+      entity_id: light.garage_lights
+      domain: light
+    - service: script.important_announcement
+      data:
+        alexa_announcement: true
+        alexa_override: false
+        persistent_notification_toggle: true
+        phone_notification_toggle: false
+        message_title: Garage Door Alert
+        message: Warning.  Garage Door has been open for 30 minutes.
+  mode: restart
+- id: "1651703416942"
+  alias: ios_push_close_garage_door
+  description: ""
+  trigger:
+    - platform: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: ios_push_close_garage_door
+  condition:
+    - type: is_open
+      condition: device
+      device_id: b443584cb02d3dca27721f65af273b7a
+      entity_id: binary_sensor.garage_door_tilt_sensor_any
+      domain: binary_sensor
+  action:
+    - service: cover.close_cover
+      data: {}
+      target:
+        entity_id: cover.garage_door
+  mode: single
+- id: "1651706360900"
+  alias: garage_door_autoclose_1hr
+  description: ""
+  trigger:
+    - platform: state
+      to: open
+      for:
+        hours: 1
+        minutes: 0
+        seconds: 0
+      entity_id: cover.garage_door
+  condition:
+    - type: is_open
+      condition: device
+      device_id: b443584cb02d3dca27721f65af273b7a
+      entity_id: binary_sensor.garage_door_tilt_sensor_any
+      domain: binary_sensor
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 0
+    - condition: state
+      entity_id: cover.garage_door
+      state: open
+  action:
+    - type: turn_on
+      device_id: d409b8bb1dfb21cff04a3d3f60988a6a
+      entity_id: light.garage_lights
+      domain: light
+    - service: notify.mobile_app_dj_iphone_12
+      data:
+        title: Garage Door Auto-Closing
+        message: Garage Door has been open for more than 60 minutes.
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.toggle_important_alexa_announcement
+              state: "on"
+          sequence:
+            - service: media_player.volume_set
+              data:
+                volume_level: 0.9
+              target:
+                entity_id: media_player.everywhere
+            - service: script.1669832041396
+              data:
+                alexa_entity: media_player.everywhere
+                message: Warning! Auto-closing garage door.
+      default: []
+    - service: cover.close_cover
+      data: {}
+      target:
+        entity_id: cover.garage_door
+  mode: restart
+- id: "1651780315915"
+  alias: garage_lights_auto_on
+  description: ""
+  trigger:
+    - platform: state
+      entity_id: switch.multirelay1_garage_door
+    - platform: state
+      entity_id: cover.garage_door
+  condition:
+    - condition: device
+      type: is_off
+      device_id: d409b8bb1dfb21cff04a3d3f60988a6a
+      entity_id: switch.garage_light_switch
+      domain: switch
+  action:
+    - type: turn_on
+      device_id: d409b8bb1dfb21cff04a3d3f60988a6a
+      entity_id: switch.garage_light_switch
+      domain: switch
+    - service: automation.turn_on
+      data: {}
+      target:
+        entity_id: automation.garage_lights_auto_off
+  mode: single
+- id: "1651780409688"
+  alias: garage_lights_auto_off
+  description: ""
+  trigger:
+    - platform: state
+      entity_id: light.garage_lights
+      for:
+        hours: 0
+        minutes: 20
+        seconds: 0
+      to: "on"
+  condition:
+    - condition: state
+      entity_id: cover.garage_door
+      state: closed
+  action:
+    - type: turn_off
+      device_id: d409b8bb1dfb21cff04a3d3f60988a6a
+      entity_id: light.garage_lights
+      domain: light
+  mode: single
+- id: "1651807409386"
+  alias: sc_step_kn_scenes_whites
+  description: ""
+  trigger:
+    - platform: state
+      entity_id: input_select.kn_scenes_whites
+  condition:
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: input_select.kn_scenes_whites
+          state: unknown
+  action:
+    - service: scene.turn_on
+      target:
+        entity_id:
+          '{{''scene.'' + states(''input_select.kn_scenes_whites'').replace("
+          ","_").lower()}}'
+  mode: single
+- id: "1651856896583"
+  alias: zwave_700_auto_ping
+  description: ""
+  trigger:
+    - platform: state
+      entity_id: sensor.node_7_node_status
+      to: dead
+    - platform: state
+      entity_id: sensor.node_15_node_status
+      to: dead
+    - platform: state
+      entity_id: sensor.node_28_node_status
+      to: dead
+    - platform: state
+      entity_id: button.node_9_node_status
+      to: dead
+    - platform: state
+      entity_id: sensor.node_4_node_status
+      to: dead
+    - platform: state
+      entity_id: sensor.node_12_node_status
+      to: dead
+    - platform: state
+      entity_id: sensor.node_16_node_status
+      to: dead
+    - platform: state
+      entity_id: sensor.node_21_node_status
+      to: dead
+    - platform: state
+      entity_id: sensor.node_17_node_status
+      to: dead
+    - platform: state
+      entity_id: sensor.node_25_node_status
+      to: dead
+    - platform: state
+      entity_id: sensor.node_24_node_status
+      to: dead
+    - platform: state
+      entity_id: sensor.node_27_node_status
+      to: dead
+  condition: []
+  action:
+    - service: input_boolean.turn_off
+      data: {}
+      target:
+        entity_id: input_boolean.dead_node_status
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: sensor.node_15_node_status
+              state: dead
+          sequence:
+            - service: button.press
+              data: {}
+              target:
+                entity_id: button.node_15_ping
+            - service: notify.mobile_app_dj_iphone_12
+              data:
+                message: Pinging Hall Light Switch
+                title: Z-Wave device died
+            - delay:
+                hours: 0
+                minutes: 0
+                seconds: 1
+                milliseconds: 0
+        - conditions:
+            - condition: state
+              entity_id: sensor.node_9_node_status
+              state: dead
+          sequence:
+            - service: button.press
+              data: {}
+              target:
+                entity_id: button.node_9_ping
+            - service: notify.mobile_app_dj_iphone_12
+              data:
+                message: Pinging Kitchen Light Switch
+                title: Z-Wave device died
+            - delay:
+                hours: 0
+                minutes: 0
+                seconds: 1
+                milliseconds: 0
+        - conditions:
+            - condition: state
+              entity_id: sensor.node_28_node_status
+              state: dead
+          sequence:
+            - service: button.press
+              data: {}
+              target:
+                entity_id: button.node_28_ping
+            - service: notify.mobile_app_dj_iphone_12
+              data:
+                message: Pinging Kitchen Table Light Switch
+                title: Z-Wave device died
+            - delay:
+                hours: 0
+                minutes: 0
+                seconds: 1
+                milliseconds: 0
+        - conditions:
+            - condition: state
+              entity_id: sensor.node_16_node_status
+              state: dead
+          sequence:
+            - service: button.press
+              data: {}
+              target:
+                entity_id: button.node_16_ping
+            - service: notify.mobile_app_dj_iphone_12
+              data:
+                message: Pinging Living Room Light Switch
+                title: Z-Wave device died
+            - delay:
+                hours: 0
+                minutes: 0
+                seconds: 1
+                milliseconds: 0
+        - conditions:
+            - condition: state
+              entity_id: sensor.node_17_node_status
+              state: dead
+          sequence:
+            - service: button.press
+              data: {}
+              target:
+                entity_id: button.node_17_ping
+            - service: notify.mobile_app_dj_iphone_12
+              data:
+                message: Pinging Gym Light Switch
+                title: Z-Wave device died
+            - delay:
+                hours: 0
+                minutes: 0
+                seconds: 1
+                milliseconds: 0
+        - conditions:
+            - condition: state
+              entity_id: sensor.node_21_node_status
+              state: dead
+          sequence:
+            - service: button.press
+              data: {}
+              target:
+                entity_id: button.node_21_ping
+            - service: notify.mobile_app_dj_iphone_12
+              data:
+                message: Pinging Garage Light Switch
+                title: Z-Wave device died
+            - delay:
+                hours: 0
+                minutes: 0
+                seconds: 1
+                milliseconds: 0
+        - conditions:
+            - condition: state
+              entity_id: sensor.node_27_node_status
+              state: dead
+          sequence:
+            - service: button.press
+              data: {}
+              target:
+                entity_id: button.node_27_ping
+            - service: notify.mobile_app_dj_iphone_12
+              data:
+                message: Pinging Office Light Switch
+                title: Z-Wave device died
+            - delay:
+                hours: 0
+                minutes: 0
+                seconds: 1
+                milliseconds: 0
+        - conditions:
+            - condition: state
+              entity_id: sensor.node_4_node_status
+              state: dead
+          sequence:
+            - service: button.press
+              data: {}
+              target:
+                entity_id: button.node_4_ping
+            - service: notify.mobile_app_dj_iphone_12
+              data:
+                message: Pinging Basement Light Switch
+                title: Z-Wave device died
+            - delay:
+                hours: 0
+                minutes: 0
+                seconds: 1
+                milliseconds: 0
+        - conditions:
+            - condition: state
+              entity_id: sensor.node_7_node_status
+              state: dead
+          sequence:
+            - service: button.press
+              data: {}
+              target:
+                entity_id: button.node_7_ping
+            - service: notify.mobile_app_dj_iphone_12
+              data:
+                message: Pinging Foyer Light Switch
+                title: Z-Wave device died
+            - delay:
+                hours: 0
+                minutes: 0
+                seconds: 1
+                milliseconds: 0
+        - conditions:
+            - condition: state
+              entity_id: sensor.node_8_node_status
+              state: dead
+          sequence:
+            - service: button.press
+              data: {}
+              target:
+                entity_id: button.node_8_ping
+            - service: notify.mobile_app_dj_iphone_12
+              data:
+                message: Pinging Porch Light Switch
+                title: Z-Wave device died
+            - delay:
+                hours: 0
+                minutes: 0
+                seconds: 1
+                milliseconds: 0
+        - conditions:
+            - condition: state
+              entity_id: sensor.node_12_node_status
+              state: dead
+          sequence:
+            - service: button.press
+              data: {}
+              target:
+                entity_id: button.node_12_ping
+            - service: notify.mobile_app_dj_iphone_12
+              data:
+                message: Pinging Deck Light Switch
+                title: Z-Wave device died
+            - delay:
+                hours: 0
+                minutes: 0
+                seconds: 1
+                milliseconds: 0
+        - conditions:
+            - condition: state
+              entity_id: sensor.node_25_node_status
+              state: dead
+          sequence:
+            - service: button.press
+              data: {}
+              target:
+                entity_id: button.node_25_ping
+            - service: notify.mobile_app_dj_iphone_12
+              data:
+                message: Pinging Master Bedroom Light Switch
+                title: Z-Wave device died
+            - delay:
+                hours: 0
+                minutes: 0
+                seconds: 1
+                milliseconds: 0
+        - conditions:
+            - condition: state
+              entity_id: sensor.node_24_node_status
+              state: dead
+          sequence:
+            - service: button.press
+              data: {}
+              target:
+                entity_id: button.node_24_ping
+            - service: notify.mobile_app_dj_iphone_12
+              data:
+                message: Pinging My Bedroom Light Switch
+                title: Z-Wave device died
+            - delay:
+                hours: 0
+                minutes: 0
+                seconds: 1
+                milliseconds: 0
+      default: []
+  mode: single
+- id: "1651864544231"
+  alias: "DJ: Welcome Home"
+  description: ""
+  trigger:
+    - platform: zone
+      entity_id: person.damon_jones
+      zone: zone.driving_trigger
+      event: enter
+  condition:
+    - condition: state
+      entity_id: proximity.proximity_home_dj
+      attribute: dir_of_travel
+      state: towards
+  action:
+    - if:
+        - condition: or
+          conditions:
+            - condition: state
+              entity_id: alarm_control_panel.rose_guard
+              state: armed_away
+            - condition: state
+              entity_id: alarm_control_panel.rose_guard
+              state: armed_vacation
+            - condition: state
+              entity_id: alarm_control_panel.rose_guard
+              state: armed_night
+      then:
+        - service: alarm_control_panel.alarm_disarm
+          data:
+            code: !secret security_code
+          target:
+            entity_id: alarm_control_panel.rose_guard
+      alias: disarm rose guard
+    - choose:
+        - conditions:
+            - condition: or
+              conditions:
+                - condition: sun
+                  after: sunset
+                  after_offset: -01:00:00
+                - condition: sun
+                  before: sunrise
+          sequence:
+            - service: scene.turn_on
+              data: {}
+              target:
+                entity_id: scene.ca_minimalist
+            - type: turn_on
+              device_id: 1eca788d873fc8571ae6a96834c5b3a7
+              entity_id: light.foyer_light_switch_zen77
+              domain: light
+              brightness_pct: 30
+            - service: light.turn_on
+              data: {}
+              target:
+                entity_id:
+                  - light.porch_light
+                  - light.driveway_cam_light
+      default: []
+      alias: turn on lights if dark
+    - choose:
+        - conditions:
+            - condition: device
+              type: is_off
+              device_id: a9fa0077a39ea3102f684c1f0b9fd512
+              entity_id: light.wiz_rgbw_tunable_08d336
+              domain: light
+          sequence:
+            - service: scene.turn_on
+              target:
+                entity_id: scene.br1_lamp_rhythm
+              metadata: {}
+      default: []
+      alias: turn on bathroom light if off
+    - service: light.turn_on
+      data: {}
+      target:
+        device_id:
+          - d409b8bb1dfb21cff04a3d3f60988a6a
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.toggle_guest_mode
+              state: "off"
+          sequence:
+            - service: input_number.set_value
+              data:
+                value: 60
+              target:
+                entity_id: input_number.grandfatherclock_interval_minutes
+            - service: automation.turn_on
+              data: {}
+              target:
+                entity_id: automation.grandfatherclock_dynamic
+      default: []
+      alias: turn on grandfather clock
+  mode: single
+- id: "1653355285681"
+  alias: "Lights: Ambient - on"
+  description: ""
+  trigger:
+    - platform: sun
+      event: sunset
+      offset: -00:45:00
+  condition:
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: input_boolean.toggle_guest_mode
+          state: "on"
+        - condition: numeric_state
+          entity_id: zone.home_2
+          above: "0"
+  action:
+    - service: scene.turn_on
+      target:
+        entity_id: scene.al_warm
+      metadata: {}
+  mode: single
+- id: "1653357109741"
+  alias: "Lights: Exterior - off"
+  description: ""
+  trigger:
+    - platform: time
+      at: "22:45:00"
+    - platform: time
+      at: "23:59:00"
+  condition:
+    - condition: state
+      entity_id: input_boolean.toggle_guest_mode
+      state: "off"
+  action:
+    - service: light.turn_off
+      data: {}
+      target:
+        entity_id: light.ext_lights
+  mode: single
+- id: "1654234740601"
+  alias: ios_push_open_garage_door
+  description: ""
+  trigger:
+    - platform: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: ios_push_open_garage_door
+  condition:
+    - type: is_not_open
+      condition: device
+      device_id: b443584cb02d3dca27721f65af273b7a
+      entity_id: binary_sensor.garage_door_tilt_sensor_any
+      domain: binary_sensor
+  action:
+    - service: cover.open_cover
+      data: {}
+      target:
+        entity_id: cover.garage_door
+  mode: single
+- id: "1654293651495"
+  alias: "Lights: Ambient - off"
+  description: ""
+  trigger:
+    - platform: time
+      at: "23:59:00"
+  condition:
+    - condition: state
+      entity_id: input_boolean.toggle_guest_mode
+      state: "off"
+  action:
+    - service: scene.turn_on
+      target:
+        entity_id: scene.al_off
+      metadata: {}
+  mode: single
+- id: "1657519465912"
+  alias: "Lights: Exterior - on"
+  description: ""
+  trigger:
+    - platform: sun
+      event: sunset
+  condition:
+    - condition: time
+      before: "23:59:00"
+      after: "17:00:00"
+      weekday:
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
+        - sat
+        - sun
+  action:
+    - type: turn_on
+      device_id: 2e25e5779e4be20ec96a0b33ceb8d0e9
+      entity_id: light.porch_light
+      domain: light
+  mode: single
+- id: "1659730451565"
+  alias: garage_light_switch_zen21_template
+  description: ""
+  use_blueprint:
+    path: willheineman/zooz_zen_blueprint_template.yaml
+    input:
+      zooz_switch: switch.garage_light_switch
+      on_5x:
+        - type: turn_off
+          device_id: d409b8bb1dfb21cff04a3d3f60988a6a
+          entity_id: light.garage_lights
+          domain: light
+      on_3x:
+        - type: turn_off
+          device_id: d409b8bb1dfb21cff04a3d3f60988a6a
+          entity_id: light.garage_lights
+          domain: light
+      on_1x:
+        - device_id: ""
+          domain: ""
+          entity_id: ""
+      on_2x:
+        - type: turn_off
+          device_id: d409b8bb1dfb21cff04a3d3f60988a6a
+          entity_id: light.garage_lights
+          domain: light
+- id: "1659731045812"
+  alias: zen21_garage_light_switch
+  description: ""
+  use_blueprint:
+    path: willheineman/zooz_zen_blueprint_template_zwave_js.yaml
+    input:
+      zooz_switch: d409b8bb1dfb21cff04a3d3f60988a6a
+      target_device: light.garage_lights
+      all_lights: light.garage_lights
+      up_5x:
+        - service: counter.configure
+          data:
+            value: 2
+          target:
+            entity_id: counter.counter_bedtime_protocol_abort_procedure
+- id: "1659817238984"
+  alias: garage_door_closure_confirmation
+  description: ""
+  trigger:
+    - platform: state
+      entity_id: cover.garage_door
+      from: open
+      to: closed
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 10
+  condition:
+    - condition: state
+      entity_id: cover.garage_door
+      state: closed
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 9
+  action:
+    - service: script.important_announcement
+      data:
+        alexa_announcement: false
+        alexa_override: false
+        persistent_notification_toggle: true
+        phone_notification_toggle: true
+        message: Garage door closed
+        message_title: Garage Door Notification
+        sentry_mode_toggle: true
+  mode: single
+- id: "1659817636719"
+  alias: garage_door_open_confirmation
+  description: ""
+  trigger:
+    - platform: state
+      entity_id: cover.garage_door
+      from: closed
+      to: open
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 12
+  condition:
+    - condition: state
+      entity_id: cover.garage_door
+      state: open
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 10
+  action:
+    - service: script.important_announcement
+      data:
+        alexa_announcement: false
+        alexa_override: false
+        persistent_notification_toggle: true
+        phone_notification_toggle: true
+        message_title: Garage Door Notification
+        message: Garage Door Open
+        sentry_mode_toggle: true
+  mode: single
+- id: "1661208336619"
+  alias: zen72_kitchen_light_switch
+  description: ""
+  use_blueprint:
+    path: IOT_Ninja/zooz-zen72.yaml
+    input:
+      zooz_zen72: 7a097ef165d305b6093132243cd4e53c
+      dimmer_down_2x:
+        - type: turn_off
+          device_id: 62b6ba280cd249ba70b02ab2ab7644f3
+          entity_id: switch.plug1_socket_1
+          domain: switch
+        - type: turn_off
+          device_id: df9d6e828c5591731fccddf8a57c0f0f
+          entity_id: light.kitchen_table_light
+          domain: light
+      dimmer_up_2x:
+        - service: scene.turn_on
+          target:
+            entity_id: scene.kn_cooking
+          metadata: {}
+      dimmer_down_1x:
+        - service: scene.turn_on
+          target:
+            entity_id: scene.kn_off
+          metadata: {}
+      dimmer_up_1x:
+        - service: scene.turn_on
+          target:
+            entity_id: scene.kn_warm
+          metadata: {}
+      dimmer_up_5x:
+        - service: alarm_control_panel.alarm_trigger
+          data:
+            code: !secret security_code
+          target:
+            entity_id: alarm_control_panel.rose_guard
+- id: "1661271204290"
+  alias: zen27_myroom_light_switch
+  description: ""
+  use_blueprint:
+    path: IOT_Ninja/zooz-zen27.yaml
+    input:
+      zooz_zen27: 618242fc5b7f2d5e8e14a6db0baeed46
+      dimmer_down_2x:
+        - service: scene.turn_on
+          target:
+            entity_id: scene.b4_bright
+          metadata: {}
+      dimmer_up_2x:
+        - choose:
+            - conditions:
+                - condition: zone
+                  entity_id: person.damon_jones
+                  zone: zone.home_2
+              sequence:
+                - service: input_boolean.turn_on
+                  data: {}
+                  target:
+                    entity_id: input_boolean.toggle_dj_in_bed
+                - service: automation.trigger
+                  data:
+                    skip_condition: true
+                  target:
+                    entity_id: automation.bedtime_protocol_in_bed
+            - conditions:
+                - condition: numeric_state
+                  entity_id: counter.counter_bedtime_protocol_abort_procedure
+                  above: 2
+                  below: 4
+              sequence:
+                - service: counter.configure
+                  data:
+                    value: 4
+                  target:
+                    entity_id: counter.counter_bedtime_protocol_abort_procedure
+          default: []
+      dimmer_down_1x:
+        - service: scene.turn_on
+          target:
+            entity_id: scene.b4_warm
+          metadata: {}
+      dimmer_up_1x:
+        - service: scene.turn_on
+          target:
+            entity_id: scene.b4_off
+          metadata: {}
+      dimmer_up_4x:
+        - service: alarm_control_panel.alarm_disarm
+          data:
+            code: !secret security_code
+          target:
+            entity_id: alarm_control_panel.rose_guard
+      dimmer_down_5x:
+        - service: alarm_control_panel.alarm_arm_custom_bypass
+          data: {}
+          target:
+            entity_id: alarm_control_panel.rose_guard
+- id: "1661271712238"
+  alias: zen27_office_light_switch
+  description: ""
+  use_blueprint:
+    path: IOT_Ninja/zooz-zen27.yaml
+    input:
+      zooz_zen27: c539d3899543b24789307ae930468c89
+      dimmer_down_2x: []
+      dimmer_down_1x:
+        - service: scene.turn_on
+          target:
+            entity_id: scene.office_off
+          metadata: {}
+      dimmer_up_2x:
+        - service: scene.turn_on
+          target:
+            entity_id: scene.office_bright
+          metadata: {}
+      dimmer_up_1x:
+        - service: scene.turn_on
+          target:
+            entity_id: scene.office_warm
+          metadata: {}
+      dimmer_up_hold: []
+      dimmer_up_3x: []
+      dimmer_down_hold: []
+- id: "1662607451301"
+  alias: garage_door_auto_open_via_motion_trigger
+  description: ""
+  trigger:
+    - platform: state
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 0
+      entity_id: binary_sensor.driveway_cam_motion
+      to: Detected
+      from: Clear
+    - platform: state
+      entity_id: []
+  condition:
+    - type: is_not_open
+      condition: device
+      device_id: b443584cb02d3dca27721f65af273b7a
+      entity_id: binary_sensor.garage_door_tilt_sensor_any
+      domain: binary_sensor
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 15
+  action:
+    - type: turn_on
+      device_id: d409b8bb1dfb21cff04a3d3f60988a6a
+      entity_id: light.garage_lights
+      domain: light
+    - type: turn_on
+      device_id: e82b2545403c3da9932d6572391952ca
+      entity_id: light.driveway_cam_light
+      domain: light
+    - service: notify.mobile_app_dj_iphone_12
+      data:
+        title: Garage Door Auto-Opening
+        message: Garage Door auto-opening via motion trigger
+    - service: cover.open_cover
+      data: {}
+      target:
+        entity_id: cover.garage_door
+    - service: automation.turn_off
+      data:
+        stop_actions: false
+      target:
+        entity_id: automation.garage_door_auto_open_via_motion_trigger
+  mode: restart
+- id: "1664459802796"
+  alias: vacation_interior_lights_off
+  description: ""
+  trigger:
+    - platform: time
+      at: 01:00:00
+    - platform: time
+      at: "23:30:00"
+  condition:
+    - condition: state
+      entity_id: input_boolean.toggle_vacation_mode
+      state: "on"
+  action:
+    - type: turn_off
+      device_id: 2e25e5779e4be20ec96a0b33ceb8d0e9
+      entity_id: light.porch_light
+      domain: light
+    - service: automation.trigger
+      data: {}
+      target:
+        entity_id: automation.scene_interior_lights_off
+  mode: single
+- id: "1664461511194"
+  alias: vacation_interior_lights_mwts_a_on
+  description: ""
+  trigger:
+    - platform: time
+      at: "20:00:00"
+    - platform: time
+      at: 06:45:00
+  condition:
+    - condition: time
+      before: 00:00:00
+      weekday:
+        - mon
+        - wed
+        - thu
+        - sat
+      after: 00:00:00
+    - condition: state
+      entity_id: input_boolean.toggle_vacation_mode
+      state: "on"
+  action:
+    - type: turn_on
+      device_id: 2e25e5779e4be20ec96a0b33ceb8d0e9
+      entity_id: light.porch_light
+      domain: light
+    - type: turn_on
+      device_id: 1eca788d873fc8571ae6a96834c5b3a7
+      entity_id: light.foyer_light_switch_zen77
+      domain: light
+    - service: scene.turn_on
+      target:
+        entity_id: scene.kn_warm
+      metadata: {}
+    - type: turn_on
+      device_id: 618242fc5b7f2d5e8e14a6db0baeed46
+      entity_id: light.my_bedroom_light
+      domain: light
+      brightness_pct: 70
+    - service: light.turn_on
+      data:
+        brightness_pct: 50
+      target:
+        entity_id:
+          - light.lr_sconce_lights
+          - light.kitchen_table_light
+          - light.plug1_socket_1
+  mode: single
+- id: "1664461653443"
+  alias: vacation_interior_lights_mornings_off
+  description: ""
+  trigger:
+    - platform: time
+      at: 08:13:00
+  condition:
+    - condition: state
+      entity_id: input_boolean.toggle_vacation_mode
+      state: "on"
+  action:
+    - service: light.turn_off
+      data: {}
+      target:
+        entity_id: light.ext_lights
+    - service: automation.trigger
+      data: {}
+      target:
+        entity_id: automation.scene_interior_lights_off
+  mode: single
+- id: "1664462043639"
+  alias: vacation_interior_lights_twfs_937pm_on
+  description: ""
+  trigger:
+    - platform: time
+      at: "21:37:00"
+  condition:
+    - condition: time
+      before: 00:00:00
+      weekday:
+        - tue
+        - fri
+        - sun
+        - wed
+      after: 00:00:00
+    - condition: state
+      entity_id: input_boolean.toggle_vacation_mode
+      state: "on"
+  action:
+    - type: turn_on
+      device_id: 2e25e5779e4be20ec96a0b33ceb8d0e9
+      entity_id: light.porch_light
+      domain: light
+    - type: turn_off
+      device_id: 1eca788d873fc8571ae6a96834c5b3a7
+      entity_id: light.foyer_light_switch_zen77
+      domain: light
+    - type: turn_off
+      device_id: 618242fc5b7f2d5e8e14a6db0baeed46
+      entity_id: light.my_bedroom_light
+      domain: light
+    - service: scene.turn_on
+      target:
+        entity_id: scene.office_off
+      metadata: {}
+    - service: light.turn_on
+      data:
+        color_name: red
+      target:
+        entity_id:
+          - light.lr_smart_lights
+          - light.wiz_rgbw_tunable_245cc9
+  mode: single
+- id: "1666761393372"
+  alias: "Lights: Interior - Away 2hrs"
+  description: ""
+  trigger:
+    - platform: state
+      entity_id: zone.home_2
+      to: "0"
+      for:
+        hours: 1
+        minutes: 0
+        seconds: 0
+  condition:
+    - condition: state
+      entity_id: input_boolean.toggle_guest_mode
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.toggle_vacation_mode
+      state: "off"
+    - condition: state
+      entity_id: zone.home_2
+      state: "0"
+      for:
+        hours: 1
+        minutes: 0
+        seconds: 0
+    - condition: state
+      entity_id: binary_sensor.thermostat_occupancy
+      state: "off"
+      for:
+        hours: 0
+        minutes: 15
+        seconds: 0
+    - condition: state
+      entity_id: binary_sensor.basement_occupancy
+      state: "off"
+      for:
+        hours: 0
+        minutes: 45
+        seconds: 0
+    - condition: state
+      entity_id: binary_sensor.living_room_sensor_zse40_home_security_motion_detection
+      state: "off"
+      for:
+        hours: 0
+        minutes: 45
+        seconds: 0
+  action:
+    - service: automation.trigger
+      data: {}
+      target:
+        entity_id:
+          - automation.dj_goodbye_home
+  mode: single
+- id: "1667592295588"
+  alias: grandfatherclock_dynamic
+  description: ""
+  trigger:
+    - platform: time_pattern
+      hours: "*"
+      minutes: /1
+  condition:
+    - condition: template
+      value_template:
+        '{{ now().minute % (states("input_number.grandfatherclock_interval_minutes")
+        |int ) == 0 }}'
+  action:
+    - service: script.1669832041396
+      data:
+        alexa_entity: media_player.everywhere
+        message: '{{ now().strftime("%I:%M") }}'
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.grandfather_clock_notifications
+              state: "on"
+          sequence:
+            - service: notify.mobile_app_dj_iphone_12
+              data:
+                title: Grandfather Clock Chime
+                data:
+                  message: field2
+                message: 'Time: {{ now().strftime("%I:%M") }}'
+      default: []
+  mode: queued
+- id: "1667921426729"
+  alias: grandfatherclock_dynamic_turnoff
+  description: ""
+  trigger:
+    - platform: zone
+      entity_id: person.damon_jones
+      zone: zone.home_2
+      event: leave
+  condition:
+    - condition: state
+      entity_id: automation.grandfatherclock_dynamic
+      state: "on"
+  action:
+    - service: automation.turn_off
+      data: {}
+      target:
+        entity_id: automation.grandfatherclock_dynamic
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.grandfather_clock_notifications
+              state: "on"
+          sequence:
+            - service: notify.mobile_app_dj_iphone_12
+              data:
+                title: Grandfather Clock Chime
+                data:
+                  message: field2
+                message: Grandpa deactivated.
+      default: []
+  mode: parallel
+- id: "1667953329569"
+  alias: dj_bedtime_protocol_in_bed
+  description: ""
+  trigger:
+    - platform: state
+      entity_id: input_boolean.toggle_dj_in_bed
+      from: "off"
+      to: "on"
+  condition:
+    - condition: zone
+      entity_id: person.damon_jones
+      zone: zone.home_2
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: input_text.text_bedtime_protocol_status
+          state: "SELF DESTRUCT "
+  action:
+    - service: input_boolean.turn_on
+      data: {}
+      target:
+        entity_id: input_boolean.toggle_dj_in_bed
+    - service: input_boolean.turn_off
+      data: {}
+      target:
+        entity_id: input_boolean.scenes_alexa_annoucement
+    - service: automation.turn_off
+      data: {}
+      target:
+        entity_id: automation.grandfatherclock_dynamic
+    - if:
+        - condition: state
+          entity_id: input_boolean.scenes_alexa_annoucement
+          state: "on"
+      then:
+        - service: script.important_announcement
+          data:
+            alexa_announcement: true
+            alexa_override: false
+            persistent_notification_toggle: false
+            phone_notification_toggle: false
+            message_title: Bedtime Routine
+            message: Goodnight
+            sentry_mode_toggle: false
+    - device_id: 6c12c9132e866015a4d9507eb77a3e89
+      domain: fan
+      entity_id: fan.laptop_fan
+      type: turn_off
+    - service: scene.turn_on
+      target:
+        entity_id: scene.dj_bedroom_only
+      metadata: {}
+    - if:
+        - condition: state
+          entity_id: input_boolean.toggle_guest_mode
+          state: "off"
+      then:
+        - service: alarm_control_panel.alarm_arm_night
+          data:
+            code: !secret security_code
+          target:
+            entity_id: alarm_control_panel.rose_guard
+      else:
+        - service: automation.trigger
+          data: {}
+          target:
+            entity_id: automation.rose_guard_secure_home
+      alias: Arm security system if guest mode off
+    - delay:
+        hours: 0
+        minutes: 5
+        seconds: 0
+        milliseconds: 0
+    - choose:
+        - conditions:
+            - condition: device
+              device_id: 4255068ece2a43a1d50d53b70e1f4f68
+              domain: media_player
+              entity_id: media_player.sonos_five
+              type: is_playing
+          sequence:
+            - service: media_player.media_pause
+              data: {}
+              target:
+                entity_id: media_player.sonos_five
+      default: []
+      alias: pause sonos
+    - service: light.turn_off
+      data: {}
+      target:
+        entity_id:
+          - light.wiz_rgbw_tunable_245cc9
+          - light.wiz_rgbw_tunable_08d336
+  mode: single
+- id: "1667962170689"
+  alias: grandfatherclock_dynamic_activation
+  description: ""
+  trigger:
+    - platform: state
+      entity_id: input_number.grandfatherclock_interval_minutes
+    - platform: state
+      entity_id: automation.grandfatherclock_dynamic
+      to: "on"
+      from: "off"
+  condition:
+    - condition: state
+      entity_id: automation.grandfatherclock_dynamic
+      state: "on"
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.grandfather_clock_notifications
+              state: "on"
+          sequence:
+            - service: notify.mobile_app_dj_iphone_12
+              data:
+                title: Grandfather Clock Chime
+                data:
+                  message: field2
+                message:
+                  Grandpa clock activated. {{states("input_number.grandfatherclock_interval_minutes")|int}}
+                  minute intervals.
+      default: []
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.toggle_important_alexa_announcement
+              state: "on"
+          sequence:
+            - service: script.1669832041396
+              data:
+                alexa_entity: media_player.everywhere
+                message:
+                  Grandpa clock activated. {{states("input_number.grandfatherclock_interval_minutes")|int}}
+                  minute intervals.
+      default: []
+  mode: single
+- id: "1667962885779"
+  alias: "Scene: Red Lights"
+  description: ""
+  trigger: []
+  condition: []
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.scenes_alexa_annoucement
+              state: "on"
+          sequence:
+            - service: script.1669832041396
+              data:
+                alexa_entity: media_player.everywhere
+                message: .
+      default: []
+    - service: scene.turn_on
+      target:
+        entity_id: scene.ca_red
+      metadata: {}
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.toggle_guest_mode
+              state: "off"
+          sequence:
+            - service: light.turn_off
+              data: {}
+              target:
+                entity_id: light.private_area_lights
+      default: []
+  mode: single
+- id: "1667963630056"
+  alias: "Scene: Warm Lights"
+  description: ""
+  trigger: []
+  condition: []
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.scenes_alexa_annoucement
+              state: "on"
+          sequence:
+            - service: notify.alexa_media
+              data:
+                target: media_player.everywhere
+                data:
+                  type: announce
+                message: .
+      default: []
+    - service: scene.turn_on
+      target:
+        entity_id: scene.ca_warm2
+      metadata: {}
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.toggle_guest_mode
+              state: "off"
+          sequence:
+            - service: light.turn_off
+              data: {}
+              target:
+                entity_id: light.private_area_lights
+      default: []
+  mode: single
+- id: "1668328795373"
+  alias: "Scene: Interior Lights off"
+  description: ""
+  trigger: []
+  condition: []
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.scenes_alexa_annoucement
+              state: "on"
+            - condition: state
+              entity_id: input_boolean.toggle_dj_in_bed
+              state: "off"
+          sequence:
+            - service: notify.alexa_media
+              data:
+                data:
+                  type: announce
+                target: media_player.everywhere
+                message: Lights Off
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.scenes_alexa_annoucement
+              state: "on"
+            - condition: state
+              entity_id: input_boolean.toggle_dj_in_bed
+              state: "on"
+          sequence:
+            - service: notify.alexa_media
+              data:
+                data:
+                  type: announce
+                target: media_player.everywhere
+                message: Goodnight
+      default: []
+    - service: light.turn_off
+      data: {}
+      target:
+        entity_id:
+          - light.ca_dimmable_dumb_lights
+          - light.ca_dumb_lights
+          - light.govee_lights
+          - light.ca_smart_lights
+          - light.ca_ambient_lights
+          - light.wiz_rgbw_tunable_4ce060
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.toggle_guest_mode
+              state: "off"
+          sequence:
+            - service: light.turn_off
+              data: {}
+              target:
+                entity_id: light.private_area_lights
+      default: []
+  mode: single
+- id: "1668825123396"
+  alias: "Scene: All Lights off"
+  description: ""
+  trigger: []
+  condition: []
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.scenes_alexa_annoucement
+              state: "on"
+          sequence:
+            - service: notify.alexa_media
+              data:
+                data:
+                  type: announce
+                target: media_player.everywhere
+                message: All Lights Off
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.scenes_alexa_annoucement
+              state: "on"
+            - condition: state
+              entity_id: input_boolean.toggle_dj_in_bed
+              state: "on"
+          sequence:
+            - service: notify.alexa_media
+              data:
+                data:
+                  type: announce
+                target: media_player.everywhere
+                message: Goodnight
+      default: []
+    - service: light.turn_off
+      data: {}
+      target:
+        entity_id:
+          - light.ca_dimmable_dumb_lights
+          - light.ca_dumb_lights
+          - light.govee_lights
+          - light.ca_smart_lights
+          - light.ca_ambient_lights
+          - light.wiz_rgbw_tunable_4ce060
+          - light.ext_lights
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.toggle_guest_mode
+              state: "off"
+          sequence:
+            - service: light.turn_off
+              data: {}
+              target:
+                entity_id: light.private_area_lights
+      default: []
+  mode: single
+- id: "1668825404591"
+  alias: "Scene: Interior Lights On"
+  description: ""
+  trigger: []
+  condition: []
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.scenes_alexa_annoucement
+              state: "on"
+          sequence:
+            - service: script.1669832041396
+              data:
+                alexa_entity: media_player.everywhere
+                message: .
+      default: []
+    - service: scene.turn_on
+      target:
+        entity_id: scene.ca_bright
+      metadata: {}
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.toggle_guest_mode
+              state: "off"
+          sequence:
+            - service: light.turn_on
+              data: {}
+              target:
+                entity_id: light.master_bedroom_light
+      default: []
+  mode: single
+- id: "1668835255725"
+  alias: "Scene: Movies"
+  description: ""
+  trigger: []
+  condition: []
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.scenes_alexa_annoucement
+              state: "on"
+          sequence:
+            - service: script.1669832041396
+              data:
+                alexa_entity: media_player.everywhere
+                message: .
+      default: []
+    - service: scene.turn_on
+      target:
+        entity_id: scene.bm_movie1
+      metadata: {}
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.toggle_guest_mode
+              state: "off"
+          sequence:
+            - service: light.turn_off
+              data: {}
+              target:
+                entity_id: light.private_area_lights
+      default: []
+    - service: media_player.turn_on
+      data: {}
+      target:
+        entity_id:
+          - media_player.playstation_4
+          - media_player.lg_webos_smart_tv
+    - wait_for_trigger:
+        - platform: device
+          device_id: 4588bcfa9de6fe66680ae0d72ea558c4
+          domain: media_player
+          entity_id: media_player.playstation_4
+          type: idle
+          for:
+            hours: 0
+            minutes: 0
+            seconds: 45
+      timeout:
+        hours: 0
+        minutes: 1
+        seconds: 0
+        milliseconds: 0
+    - service: media_player.select_source
+      data:
+        source: Netflix
+      target:
+        entity_id: media_player.playstation_4
+        device_id: 4588bcfa9de6fe66680ae0d72ea558c4
+    - if:
+        - condition: device
+          device_id: 4255068ece2a43a1d50d53b70e1f4f68
+          domain: media_player
+          entity_id: media_player.sonos_five
+          type: is_playing
+      then:
+        - service: media_player.media_pause
+          data: {}
+          target:
+            entity_id: media_player.sonos_five
+  mode: single
+- id: "1668998252712"
+  alias: "Scene: Chill Lights"
+  description: ""
+  trigger: []
+  condition: []
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.scenes_alexa_annoucement
+              state: "on"
+          sequence:
+            - service: notify.alexa_media
+              data:
+                target: media_player.everywhere
+                data:
+                  type: announce
+                message: .
+      default: []
+    - service: scene.turn_on
+      target:
+        entity_id: scene.ca_chill
+      metadata: {}
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.toggle_guest_mode
+              state: "off"
+          sequence:
+            - service: light.turn_off
+              data: {}
+              target:
+                entity_id: light.private_area_lights
+      default: []
+  mode: single
+- id: "1668998834800"
+  alias: zen27_kitchen_table_light_switch
+  description: ""
+  use_blueprint:
+    path: IOT_Ninja/zooz-zen27.yaml
+    input:
+      zooz_zen27: df9d6e828c5591731fccddf8a57c0f0f
+      dimmer_up_2x:
+        - service: scene.turn_on
+          target:
+            entity_id: scene.kn_cooking
+          metadata: {}
+      dimmer_down_2x:
+        - service: scene.turn_on
+          target:
+            entity_id: scene.kn_off
+          metadata: {}
+        - type: turn_off
+          device_id: df9d6e828c5591731fccddf8a57c0f0f
+          entity_id: light.kitchen_table_light
+          domain: light
+- id: "1669003480652"
+  alias: "Scene: Moody"
+  description: ""
+  trigger: []
+  condition: []
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.scenes_alexa_annoucement
+              state: "on"
+          sequence:
+            - service: script.1669832041396
+              data:
+                alexa_entity: media_player.everywhere
+                message: .
+      default: []
+    - service: scene.turn_on
+      target:
+        entity_id: scene.ca_chill
+      metadata: {}
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.toggle_guest_mode
+              state: "off"
+          sequence:
+            - service: light.turn_off
+              data: {}
+              target:
+                entity_id: light.private_area_lights
+      default: []
+    - type: turn_on
+      device_id: 62b6ba280cd249ba70b02ab2ab7644f3
+      entity_id: light.plug1_socket_1
+      domain: light
+  mode: single
+- id: "1669828717247"
+  alias: Sonos TTS script test
+  trigger:
+    - platform: state
+      entity_id: input_boolean.dead_node_status
+  action:
+    - service: script.sonos_tts_script
+      data:
+        sonos_entity: media_player.sonos_five
+        volume: 0.5
+        message: Garage Door Open
+        delay: 00:00:03
+- id: "1669831265191"
+  alias: Alarm Clock
+  description: ""
+  trigger:
+    - platform: time
+      at: input_datetime.time_alarmclock_weekdays
+  condition:
+    - condition: zone
+      entity_id: person.damon_jones
+      zone: zone.home_2
+  action:
+    - service: input_boolean.turn_off
+      data: {}
+      target:
+        entity_id: input_boolean.toggle_dj_in_bed
+    - service: scene.turn_on
+      target:
+        entity_id: scene.dj_morning
+      metadata: {}
+    - service: script.important_announcement
+      data:
+        alexa_announcement: true
+        alexa_override: false
+        persistent_notification_toggle: false
+        phone_notification_toggle: false
+        sentry_mode_toggle: false
+        message_title: Alarm Clock
+        message: Good morning Damon. Time to get the fuck out of bed.
+      alias: Morning Greeting
+    - service: input_number.set_value
+      data:
+        value: 15
+      target:
+        entity_id: input_number.grandfatherclock_interval_minutes
+    - service: automation.turn_on
+      data: {}
+      target:
+        entity_id:
+          - automation.grandfatherclock_dynamic
+          - automation.grandfatherclock_dynamic_turnoff
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.toggle_guest_mode
+              state: "off"
+          sequence:
+            - service: media_player.volume_set
+              data:
+                volume_level: 0.9
+              target:
+                entity_id: media_player.everywhere
+      default: []
+      alias: Turn up alexa volume
+  mode: single
+- id: "1669838747227"
+  alias: alarmClock_weekdays_sonos_updater
+  description: ""
+  trigger:
+    - platform: state
+      entity_id: automation.alarmclock_weekdays
+    - platform: state
+      entity_id: input_datetime.time_alarmclock_weekdays
+  condition: []
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: automation.alarmclock_weekdays
+              state: "on"
+          sequence:
+            - service: sonos.update_alarm
+              data:
+                alarm_id: 1
+                enabled: true
+              target:
+                device_id: 4255068ece2a43a1d50d53b70e1f4f68
+        - conditions:
+            - condition: state
+              entity_id: automation.alarmclock_weekdays
+              state: "off"
+          sequence:
+            - service: sonos.update_alarm
+              data:
+                alarm_id: 1
+                enabled: false
+              target:
+                device_id: 4255068ece2a43a1d50d53b70e1f4f68
+      default: []
+    - service: sonos.update_alarm
+      data:
+        time: "{{ states('input_datetime.time_alarmclock_weekdays') }}"
+        alarm_id: 1
+      target:
+        device_id: 4255068ece2a43a1d50d53b70e1f4f68
+  mode: single
+- id: "1670014120608"
+  alias: Reset Intercom Settings
+  description: ""
+  trigger:
+    - platform: time
+      at: 09:00:00
+  condition: []
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.toggle_guest_mode
+              state: "off"
+          sequence:
+            - service: input_boolean.turn_on
+              data: {}
+              target:
+                entity_id:
+                  - input_boolean.toggle_important_alexa_announcement
+                  - input_boolean.scenes_alexa_annoucement
+      default: []
+    - choose:
+        - conditions:
+            - condition: and
+              conditions:
+                - condition: numeric_state
+                  entity_id: media_player.sonos_five
+                  below: ".3"
+                  attribute: volume_level
+                - condition: device
+                  device_id: 4255068ece2a43a1d50d53b70e1f4f68
+                  domain: media_player
+                  entity_id: media_player.sonos_five
+                  type: is_playing
+          sequence:
+            - service: media_player.volume_set
+              data:
+                volume_level: 0.5
+              target:
+                entity_id: media_player.everywhere
+        - conditions:
+            - condition: device
+              device_id: 4255068ece2a43a1d50d53b70e1f4f68
+              domain: media_player
+              entity_id: media_player.sonos_five
+              type: is_paused
+          sequence:
+            - service: media_player.volume_set
+              data:
+                volume_level: 0.6
+              target:
+                entity_id: media_player.everywhere
+      default: []
+  mode: single
+- id: "1670435504592"
+  alias: Bedtime dynamic calculation from alarm clock
+  description: ""
+  trigger:
+    - platform: state
+      entity_id: input_datetime.time_alarmclock_weekdays
+  condition: []
+  action:
+    - service: input_datetime.set_datetime
+      data:
+        time:
+          " {{ (state_attr('input_datetime.time_alarmclock_weekdays','timestamp')|as_datetime
+          - timedelta(hours = 8)).time() }} "
+      target:
+        entity_id: input_datetime.time_bedtime
+    - service: input_datetime.set_datetime
+      data:
+        time:
+          " {{ (state_attr('input_datetime.time_bedtime','timestamp')|as_datetime
+          - timedelta(minutes = 40)).time() }} "
+      target:
+        entity_id: input_datetime.time_bedtime_warning
+    - service: input_datetime.set_datetime
+      data:
+        time:
+          " {{ (state_attr('input_datetime.time_alarmclock_weekdays','timestamp')|as_datetime
+          - timedelta(minutes = 10)).time() }} "
+      target:
+        entity_id: input_datetime.time_morning_preheat
+    - service: input_datetime.set_datetime
+      data:
+        time:
+          " {{ (state_attr('input_datetime.time_bedtime','timestamp')|as_datetime
+          - timedelta(minutes = 10)).time() }} "
+      target:
+        entity_id: input_datetime.input_datetime_time_bedtime_protocol_final_warning
+  mode: single
+- id: "1670444623049"
+  alias: Bedtime Warning (1hr)
+  description: ""
+  trigger:
+    - platform: time
+      at: input_datetime.time_bedtime_warning
+  condition:
+    - condition: state
+      entity_id: automation.alarmclock_weekdays
+      state: "on"
+    - condition: zone
+      entity_id: person.damon_jones
+      zone: zone.home_2
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.toggle_important_alexa_announcement
+              state: "on"
+          sequence:
+            - service: script.1669832041396
+              data:
+                alexa_entity: media_player.everywhere
+                message: Warning. T Minus 40 minutes until bedtime.
+      default: []
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.toggle_guest_mode
+              state: "off"
+          sequence:
+            - service: script.1670440191524
+              data:
+                activation_announcement: "false"
+                interval: 15
+      default: []
+  mode: single
+- id: "1670545638407"
+  alias: lg_tv_wake_on_lan
+  description: ""
+  trigger:
+    - platform: webostv.turn_on
+      entity_id: media_player.lg_webos_smart_tv
+  condition: []
+  action:
+    - service: wake_on_lan.send_magic_packet
+      data:
+        mac: 0c:8e:29:90:d6:98
+  mode: single
+- id: "1670597194763"
+  alias: Wakeup Preheat
+  description: ""
+  trigger:
+    - platform: time
+      at: input_datetime.time_morning_preheat
+  condition:
+    - condition: numeric_state
+      entity_id: sensor.thermostat_temperature
+      below: "67"
+    - condition: state
+      entity_id: climate.thermostat
+      state: heat
+    - condition: state
+      entity_id: automation.alarmclock_weekdays
+      state: "on"
+    - condition: zone
+      entity_id: person.damon_jones
+      zone: zone.home_2
+  action:
+    - service: climate.set_temperature
+      data:
+        temperature: 72
+      target:
+        entity_id: climate.thermostat
+  mode: single
+- id: "1670790679692"
+  description: ""
+  trigger:
+    - platform: time
+      at: input_datetime.time_bedtime
+  condition:
+    - condition: zone
+      entity_id: person.damon_jones
+      zone: zone.home_2
+    - condition: state
+      entity_id: automation.alarmclock_weekdays
+      state: "on"
+    - condition: state
+      entity_id: input_boolean.toggle_guest_mode
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.toggle_dj_in_bed
+      state: "off"
+  action:
+    - service: input_text.set_value
+      data:
+        value: INITIATED
+      target:
+        entity_id: input_text.text_bedtime_protocol_status
+    - service: input_datetime.set_datetime
+      data:
+        time:
+          " {{ (state_attr('input_datetime.time_bedtime','timestamp')|as_datetime
+          + timedelta(minutes = 5)).time() }} "
+      target:
+        entity_id: input_datetime.time_bedtime_protocol_start
+    - service: input_datetime.set_datetime
+      data:
+        time:
+          " {{ (state_attr('input_datetime.time_bedtime_protocol_start','timestamp')|as_datetime
+          + timedelta(minutes = 5, seconds = 59)).time() }} "
+      target:
+        entity_id: input_datetime.time_bedtime_protocol_abort_window_closes
+    - service: input_datetime.set_datetime
+      data:
+        time:
+          " {{ (state_attr('input_datetime.time_bedtime_protocol_abort_window_closes','timestamp')|as_datetime
+          + timedelta(minutes = 5, seconds = 45)).time() }} "
+      target:
+        entity_id: input_datetime.time_bedtime_protocol_self_destruct
+    - service: input_datetime.set_datetime
+      data:
+        time:
+          " {{ (state_attr('input_datetime.time_bedtime_protocol_self_destruct','timestamp')|as_datetime
+          + timedelta(hours = 2)).time() }} "
+      target:
+        entity_id: input_datetime.time_bedtime_auto_reset
+    - service: automation.turn_on
+      data: {}
+      target:
+        entity_id: automation.bedtime_protocol_activation
+    - service: notify.mobile_app_dj_iphone_12
+      data:
+        title: BEDTIME PROTOCOL WARNING
+        data:
+          message: System Initialized.
+        message: System Initialized.
+    - service: script.1669832041396
+      data:
+        alexa_entity: media_player.everywhere
+        message: Warning. Bedtime Protocol Initiated
+    - service: automation.turn_on
+      data: {}
+      target:
+        entity_id: automation.bedtime_protocol_reset
+  mode: single
+- id: "1670794462874"
+  alias: "Bedtime Protocol: Activation"
+  description: ""
+  trigger:
+    - platform: time
+      at: input_datetime.time_bedtime_protocol_start
+  condition:
+    - condition: state
+      entity_id: input_boolean.toggle_dj_in_bed
+      state: "off"
+  action:
+    - service: automation.turn_off
+      data: {}
+      target:
+        entity_id: automation.grandfatherclock_dynamic
+    - service: media_player.volume_set
+      data:
+        volume_level: 0.9
+      target:
+        entity_id:
+          - media_player.sonos_five
+          - media_player.damon_s_echo
+          - media_player.damon_s_echo_dot
+    - service: media_player.play_media
+      target:
+        entity_id: media_player.sonos_five
+      data:
+        media_content_id: media-source://media_source/local/self_detruct_sequence.mp3
+        media_content_type: audio/mpeg
+      metadata:
+        title: self_detruct_sequence.mp3
+        thumbnail:
+        media_class: music
+        children_media_class:
+        navigateIds:
+          - {}
+          - media_content_type: app
+            media_content_id: media-source://media_source
+    - service: input_text.set_value
+      data:
+        value: ACTIVATED
+      target:
+        entity_id: input_text.text_bedtime_protocol_status
+    - service: automation.turn_on
+      data: {}
+      target:
+        entity_id: automation.bedtime_protocol_abort
+    - type: turn_off
+      device_id: 4255068ece2a43a1d50d53b70e1f4f68
+      entity_id: switch.sonos_sonos_five_touch_controls
+      domain: switch
+    - service: scene.turn_on
+      target:
+        entity_id: scene.dj_bedtime_protocol_dim_lights
+      metadata: {}
+    - type: turn_on
+      device_id: d409b8bb1dfb21cff04a3d3f60988a6a
+      entity_id: switch.garage_light_switch
+      domain: switch
+    - wait_for_trigger:
+        - platform: time
+          at: input_datetime.time_bedtime_protocol_abort_window_closes
+      continue_on_timeout: false
+    - service: automation.turn_off
+      data: {}
+      target:
+        entity_id: automation.bedtime_protocol_abort
+    - service: input_text.set_value
+      data:
+        value: "SELF DESTRUCT "
+      target:
+        entity_id: input_text.text_bedtime_protocol_status
+    - wait_for_trigger:
+        - platform: time
+          at: input_datetime.time_bedtime_protocol_self_destruct
+      continue_on_timeout: false
+    - service: automation.trigger
+      data: {}
+      target:
+        entity_id: automation.scene_interior_lights_off
+    - service: scene.turn_on
+      target:
+        entity_id: scene.minimal_lighting
+      metadata: {}
+    - service: media_player.turn_off
+      data: {}
+      target:
+        entity_id:
+          - media_player.lg_webos_smart_tv
+          - media_player.playstation_4
+  mode: single
+- id: "1670795359143"
+  alias: bedtime_protocol_abort
+  description: ""
+  trigger:
+    - platform: state
+      entity_id:
+        - counter.counter_bedtime_protocol_abort_procedure
+      to: "4"
+  condition:
+    - condition: time
+      before: input_datetime.time_bedtime_protocol_abort_window_closes
+      after: input_datetime.time_bedtime_protocol_start
+  action:
+    - service: input_text.set_value
+      data:
+        value: ABORTED
+      target:
+        entity_id: input_text.text_bedtime_protocol_status
+    - service: media_player.media_pause
+      data: {}
+      target:
+        entity_id: media_player.sonos_five
+    - service: automation.trigger
+      data: {}
+      target:
+        entity_id: automation.scene_interior_lights_off
+    - service: script.1669832041396
+      data:
+        alexa_entity: media_player.everywhere
+        message: Bedtime protocol abort procedure executed successfully.
+  mode: single
+- id: "1670796468998"
+  alias: "Bedtime Protocol: Reset"
+  description: ""
+  trigger:
+    - platform: time
+      at: input_datetime.time_bedtime_auto_reset
+  condition: []
+  action:
+    - service: automation.turn_off
+      data: {}
+      target:
+        entity_id:
+          - automation.bedtime_protocol_activation
+          - automation.bedtime_protocol_abort
+    - service: counter.reset
+      data: {}
+      target:
+        entity_id: counter.counter_bedtime_protocol_abort_procedure
+    - type: turn_on
+      device_id: 4255068ece2a43a1d50d53b70e1f4f68
+      entity_id: switch.sonos_sonos_five_touch_controls
+      domain: switch
+    - service: input_text.set_value
+      data:
+        value: "OFF"
+      target:
+        entity_id: input_text.text_bedtime_protocol_status
+  mode: single
+- id: "1670816817610"
+  alias: Garage Door Auto-Open
+  description: ""
+  trigger:
+    - platform: zone
+      entity_id: person.damon_jones
+      zone: zone.driving_trigger
+      event: enter
+  condition:
+    - condition: state
+      entity_id: proximity.proximity_home_dj
+      attribute: dir_of_travel
+      state: towards
+  action:
+    - service: alarm_control_panel.alarm_disarm
+      data:
+        code: !secret security_code
+      target:
+        entity_id: alarm_control_panel.rose_guard
+    - if:
+        - condition: state
+          entity_id: cover.garage_door
+          state: closed
+          for:
+            hours: 0
+            minutes: 30
+            seconds: 30
+      then:
+        - service: cover.open_cover
+          data: {}
+          target:
+            entity_id: cover.garage_door
+    - service: automation.turn_off
+      data:
+        stop_actions: false
+      target:
+        entity_id: automation.garage_door_auto_open
+    - service: script.important_announcement
+      data:
+        alexa_announcement: false
+        alexa_override: false
+        persistent_notification_toggle: true
+        phone_notification_toggle: true
+        sentry_mode_toggle: true
+        message_title: Sentry Alert
+        message: Preparing home for arrival.
+  mode: single
+- id: "1670818059276"
+  alias: "Tag: Garage Door: Auto-Open Activation"
+  description: ""
+  trigger:
+    - platform: tag
+      tag_id: 2236dcf7-a452-4671-bc4a-54deb7fdee5c
+    - platform: event
+      event_type: tag_garage_door_auto_open_activation
+  condition: []
+  action:
+    - service: automation.turn_on
+      data: {}
+      target:
+        entity_id: automation.garage_door_auto_open
+  mode: single
+- id: "1670821101193"
+  alias: "Scene: Fireplace: Normal"
+  description: ""
+  trigger:
+    - platform: event
+      event_type: scene_fireplace_normal
+  condition: []
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.scenes_alexa_annoucement
+              state: "on"
+          sequence:
+            - service: script.1669832041396
+              data:
+                alexa_entity: media_player.everywhere
+                message: .
+      default: []
+      enabled: false
+    - service: scene.turn_on
+      target:
+        entity_id: scene.lr_fireplace_normal
+      metadata: {}
+    - if:
+        - condition: and
+          conditions:
+            - condition: device
+              type: is_on
+              device_id: df9d6e828c5591731fccddf8a57c0f0f
+              entity_id: light.kitchen_table_light
+              domain: light
+            - condition: numeric_state
+              entity_id: light.kitchen_table_light
+              attribute: brightness
+              above: 30
+      then:
+        - service: light.turn_on
+          data:
+            brightness_pct: 30
+          target:
+            entity_id: light.kitchen_table_light
+    - service: media_player.volume_set
+      data:
+        volume_level: 0.92
+      target:
+        device_id: 4255068ece2a43a1d50d53b70e1f4f68
+    - service: media_player.play_media
+      data:
+        media_content_type: music
+        media_content_id: https://open.spotify.com/track/2Xd4gLwFl0dBg7RTh99MSO?si=a3f8cb590f044cc6
+      target:
+        entity_id:
+          - media_player.sonos_five
+  mode: single
+- id: "1671032116015"
+  alias: zen34_garage_light_remote_switch
+  description: ""
+  trigger:
+    - platform: event
+      event_type: zwave_js_value_notification
+      event_data:
+        node_id: 22
+        label: Scene 001
+        value: KeyPressed
+    - platform: event
+      event_type: zwave_js_value_notification
+      event_data:
+        node_id: 22
+        label: Scene 002
+        value: KeyPressed
+  condition: []
+  action:
+    - type: toggle
+      device_id: d409b8bb1dfb21cff04a3d3f60988a6a
+      entity_id: switch.garage_light_switch
+      domain: switch
+  mode: single
+- id: "1671055900780"
+  alias: "Tag: Toggle Bathroom Lamp"
+  description: ""
+  trigger:
+    - platform: tag
+      tag_id: 2236dcf7-a452-4671-bc4a-54deb7fdee5c
+    - platform: event
+      event_type: tag_toggle_bathroom_lamp
+  condition: []
+  action:
+    - service: switch.toggle
+      data: {}
+      target:
+        entity_id: switch.dj_lights_template_2
+  mode: single
+- id: "1671056558659"
+  alias: "Tag: Toggle Garage Door"
+  description: open/close garage door when scanned
+  trigger:
+    - platform: tag
+      tag_id: 2236dcf7-a452-4671-bc4a-54deb7fdee5c
+    - platform: event
+      event_type: tag_toggle_garage_door
+  condition: []
+  action:
+    - service: cover.toggle
+      data: {}
+      target:
+        entity_id: cover.garage_door
+  mode: single
+- id: "1671058584712"
+  alias: Laptop Fan Temporary-On
+  description: ""
+  trigger:
+    - platform: event
+      event_type: turn_on_laptop_fan
+    - type: temperature
+      platform: device
+      device_id: f8024301d782dcc27c28da3b344d9175
+      entity_id: sensor.worklaptop_gputemperature
+      domain: sensor
+      above: 133
+      enabled: false
+    - type: temperature
+      platform: device
+      device_id: f8024301d782dcc27c28da3b344d9175
+      entity_id: sensor.worklaptop_gputemperature
+      domain: sensor
+      below: 70
+      enabled: false
+    - platform: numeric_state
+      entity_id: sensor.worklaptop_cpuload
+      above: 17
+  condition:
+    - condition: device
+      device_id: 6c12c9132e866015a4d9507eb77a3e89
+      domain: fan
+      entity_id: fan.laptop_fan
+      type: is_off
+    - condition: zone
+      entity_id: person.damon_jones
+      zone: zone.home_2
+    - condition: state
+      entity_id: sensor.worklaptop_battery_powerline_status
+      state: Online
+  action:
+    - type: turn_on
+      device_id: 6c12c9132e866015a4d9507eb77a3e89
+      entity_id: fan.laptop_fan
+      domain: fan
+    - delay:
+        hours: 0
+        minutes: 30
+        seconds: 0
+        milliseconds: 0
+    - type: turn_off
+      device_id: 6c12c9132e866015a4d9507eb77a3e89
+      entity_id: fan.laptop_fan
+      domain: fan
+  mode: restart
+- id: "1671073545419"
+  description: ""
+  trigger:
+    - platform: state
+      entity_id:
+        - input_boolean.toggle_laundry_washer
+      to: "on"
+  condition: []
+  action:
+    - service: timer.start
+      data:
+        duration: 0{{ states("input_text.text_washer_duration") | string }}:00
+      target:
+        entity_id: timer.timer_laundry_washer
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.scenes_alexa_annoucement
+              state: "on"
+          sequence:
+            - service: script.1669832041396
+              data:
+                alexa_entity: media_player.everywhere
+                message:
+                  laundry assistant activated. {{ ((state_attr('timer.timer_laundry_washer',
+                  'finishes_at') | default(now().timestamp(), true) | as_datetime - now()).total_seconds()
+                  | int(0) / 60 ) | round(1) }} minutes remaining on washing machine.
+  mode: single
+- id: "1671078565167"
+  alias: laundry_dryer_start
+  description: ""
+  trigger:
+    - platform: state
+      entity_id:
+        - input_select.input_select_dropdown_dryer_status
+      to: running
+  condition: []
+  action:
+    - service: input_select.select_option
+      data:
+        option: running
+      target:
+        entity_id:
+          - input_select.input_select_dropdown_dryer_status
+    - service: timer.start
+      data:
+        duration: 0{{ states("input_text.text_dryer_duration") | string }}:00
+      target:
+        entity_id: timer.timer_laundry_dryer
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.scenes_alexa_annoucement
+              state: "on"
+          sequence:
+            - service: script.1669832041396
+              data:
+                alexa_entity: media_player.everywhere
+                message:
+                  laundry assistant activated. {{ ((state_attr('timer.timer_laundry_dryer',
+                  'finishes_at') | default(now().timestamp(), true) | as_datetime - now()).total_seconds()
+                  | int(0) / 60 ) | round(1) }} minutes remaining on drying machine.
+  mode: single
+- id: "1671079297491"
+  alias: Washing Machine Done Announcement
+  description: ""
+  trigger:
+    - platform: time_pattern
+      minutes: /7
+      hours: "*"
+  condition:
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: input_boolean.toggle_laundry_washer
+          state: "on"
+        - condition: state
+          entity_id: input_boolean.toggle_laundry_dryer
+          state: "on"
+  action:
+    - service: notify.mobile_app_dj_iphone_12
+      data:
+        title: Laundry Assistant
+        message: Dryer has finished
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.scenes_alexa_annoucement
+              state: "on"
+          sequence:
+            - service: script.1669832041396
+              data:
+                alexa_entity: media_player.everywhere
+                message: Washer timer is done.
+      default: []
+    - if: []
+      then: []
+  mode: restart
+- id: "1671121288278"
+  alias: "Security Alarm: Intruder Alert Activation"
+  description: ""
+  trigger:
+    - platform: state
+      entity_id:
+        - alarm_control_panel.rose_guard
+      to: triggered
+      id: rose-guard-triggered
+  condition: []
+  action:
+    - if:
+        - condition: trigger
+          id: rose-guard-triggered
+          enabled: false
+      then:
+        - service: light.turn_on
+          data: {}
+          target:
+            entity_id:
+              - light.front_lights
+              - light.deck_lights
+          enabled: true
+        - service: scene.turn_on
+          target:
+            entity_id: scene.ca_bright
+          metadata: {}
+          enabled: true
+        - service: media_player.volume_set
+          data:
+            volume_level: 0.95
+          target:
+            entity_id:
+              - media_player.sonos_five
+              - media_player.everywhere
+          enabled: true
+        - service: media_player.repeat_set
+          data:
+            repeat: all
+          enabled: true
+          target:
+            entity_id: media_player.sonos_five
+        - service: media_player.play_media
+          target:
+            entity_id: media_player.sonos_five
+          data:
+            media_content_id: media-source://media_source/local/alarm_home2.mp3
+            media_content_type: audio/mpeg
+          metadata:
+            title: alarm_home2.mp3
+            thumbnail:
+            media_class: music
+            children_media_class:
+            navigateIds:
+              - {}
+              - media_content_type: app
+                media_content_id: media-source://media_source
+          enabled: true
+        - repeat:
+            until:
+              - condition: not
+                conditions:
+                  - condition: state
+                    entity_id: alarm_control_panel.rose_guard
+                    state: triggered
+                alias: alexa alarm while Rose Guard is TRIGGERED
+                enabled: true
+            sequence:
+              - service: script.1669832041396
+                data:
+                  alexa_entity: media_player.everywhere
+                  message:
+                    Warning. The police are on their way.  Vacate the premesis immediately.  The
+                    owner is armed and prepared to shoot. All video, audio, and sensory
+                    data evidence has been backed up to the cloud.
+                enabled: true
+              - service: media_player.play_media
+                data:
+                  media_content_id: https://open.spotify.com/track/6gRcAqZ11Ja2SFsRFAhpXq
+                  media_content_type: music
+                target:
+                  entity_id: media_player.spotify_jones6137
+                enabled: false
+              - delay:
+                  hours: 0
+                  minutes: 5
+                  seconds: 0
+                  milliseconds: 0
+                enabled: true
+          enabled: true
+        - parallel:
+            - repeat:
+                until:
+                  - condition: not
+                    conditions:
+                      - condition: state
+                        entity_id: alarm_control_panel.rose_guard
+                        state: disarmed
+                sequence:
+                  - service: light.turn_on
+                    data:
+                      brightness_pct: 84
+                    target:
+                      entity_id: light.ca_dimmable_dumb_lights
+                  - delay:
+                      hours: 0
+                      minutes: 0
+                      seconds: 10
+                      milliseconds: 0
+                  - service: light.turn_on
+                    data:
+                      brightness_pct: 20
+                    target:
+                      entity_id: light.ca_dimmable_dumb_lights
+                  - delay:
+                      hours: 0
+                      minutes: 0
+                      seconds: 10
+                      milliseconds: 0
+          enabled: false
+        - type: turn_on
+          device_id: e82b2545403c3da9932d6572391952ca
+          entity_id: switch.driveway_cam_siren
+          domain: switch
+          enabled: false
+      enabled: true
+  mode: restart
+- id: "1671121506235"
+  description: ""
+  trigger:
+    - platform: state
+      entity_id:
+        - alarm_control_panel.rose_guard
+      from: triggered
+  condition: []
+  action:
+    - type: turn_off
+      device_id: e82b2545403c3da9932d6572391952ca
+      entity_id: switch.driveway_cam_siren
+      domain: switch
+    - service: media_player.media_stop
+      data: {}
+      target:
+        entity_id:
+          - media_player.sonos_five
+    - service: media_player.media_pause
+      data: {}
+      target:
+        entity_id: media_player.spotify_jones6137
+    - service: media_player.volume_set
+      data:
+        volume_level: 0.5
+      target:
+        entity_id:
+          - media_player.sonos_five
+          - media_player.damon_s_echo
+          - media_player.damon_s_echo_dot
+    - service: media_player.repeat_set
+      data:
+        repeat: "off"
+      target:
+        entity_id:
+          - media_player.sonos_five
+          - media_player.spotify_jones6137
+  mode: single
+- id: "1671134305780"
+  alias: TEST_zen32 Set Indicator Light on Scene Controller
+  description: ""
+  use_blueprint:
+    path: halomademeapc/set-the-indicator-light-on-a-zooz-zen32-scene-controller-button-to-match-the-state-of-a-light.yaml
+    input:
+      zooz_switch: 01b5fdd74a3e0c5b30e075a2b519a65d
+      target_light: light.lr_smart_lights
+      scene_button: "1"
+      off_color: "3"
+      dimmed_color: "1"
+- id: "1672329445715"
+  alias: Motion Alerts
+  description: ""
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.living_room_sensor_zse40_home_security_motion_detection
+      to: "on"
+      from: "off"
+  condition: []
+  action:
+    - if:
+        - condition: state
+          entity_id: input_boolean.toggle_rose_guard_interior_motion_triggers
+          state: "on"
+        - condition: or
+          conditions:
+            - condition: state
+              entity_id: alarm_control_panel.rose_guard
+              state: armed_away
+            - condition: state
+              entity_id: alarm_control_panel.rose_guard
+              state: armed_home
+            - condition: state
+              entity_id: alarm_control_panel.rose_guard
+              state: armed_night
+              for:
+                hours: 0
+                minutes: 0
+                seconds: 0
+            - condition: state
+              entity_id: alarm_control_panel.rose_guard
+              state: armed_vacation
+      then:
+        - service: script.important_announcement
+          data:
+            alexa_announcement: false
+            alexa_override: false
+            persistent_notification_toggle: true
+            phone_notification_toggle: true
+            message_title: Sentry Alert
+            message: Living Room Motion Detected.
+            sentry_mode_toggle: true
+      else:
+        - service: script.important_announcement
+          data:
+            alexa_announcement: false
+            alexa_override: false
+            persistent_notification_toggle: true
+            phone_notification_toggle: false
+            message_title: Sentry Alert
+            message: Living Room Motion Detected.
+            sentry_mode_toggle: false
+    - delay:
+        hours: 0
+        minutes: 1
+        seconds: 0
+        milliseconds: 0
+  mode: single
+- id: "1672329648365"
+  alias: "Motion Alert: Driveway"
+  description: ""
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.driveway_cam_motion
+      to: "on"
+      from: "off"
+  condition: []
+  action:
+    - if:
+        - condition: or
+          conditions:
+            - condition: state
+              entity_id: alarm_control_panel.rose_guard
+              for:
+                hours: 0
+                minutes: 0
+                seconds: 0
+              state: armed_away
+            - condition: state
+              entity_id: alarm_control_panel.rose_guard
+              for:
+                hours: 0
+                minutes: 0
+                seconds: 0
+              state: armed_vacation
+            - condition: state
+              entity_id: alarm_control_panel.rose_guard
+              for:
+                hours: 0
+                minutes: 0
+                seconds: 0
+              state: armed_home
+      then:
+        - service: script.important_announcement
+          data:
+            alexa_announcement: false
+            alexa_override: false
+            persistent_notification_toggle: true
+            phone_notification_toggle: true
+            message_title: Sentry Alert
+            message: Driveway Motion Detected.
+            sentry_mode_toggle: true
+      else:
+        - service: script.important_announcement
+          data:
+            alexa_announcement: false
+            alexa_override: false
+            persistent_notification_toggle: true
+            phone_notification_toggle: false
+            message_title: Sentry Alert
+            message: Driveway Motion Detected.
+            sentry_mode_toggle: false
+    - delay:
+        hours: 0
+        minutes: 1
+        seconds: 0
+        milliseconds: 0
+  mode: single
+- id: "1672334311676"
+  alias: Anti-freeze
+  description: ""
+  trigger:
+    - platform: time_pattern
+      hours: "*"
+      minutes: /30
+  condition:
+    - condition: numeric_state
+      entity_id: climate.thermostat
+      attribute: temperature
+      below: 58
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.toggle_important_alexa_announcement
+              state: "on"
+          sequence:
+            - service: notify.mobile_app_dj_iphone_12
+              data:
+                title: Anti-freeze protocol activated
+                data:
+                  message: field2
+                message: Interior temp dropped below 58 degrees.
+            - service: script.1669832041396
+              data:
+                alexa_entity: media_player.everywhere
+                message: Danger. Temp dropped below 58 degrees. Initiating anti-freeze protocol.
+      default: []
+    - service: climate.set_temperature
+      data:
+        temperature: 62
+        hvac_mode: heat
+      target:
+        entity_id: climate.thermostat
+  mode: queued
+- id: "1674094369006"
+  alias: alarmClock_autoOff_friday
+  description: turn off alarm used throughout week
+  trigger:
+    - platform: time
+      at: input_datetime.time_alarmclock_weekdays
+  condition:
+    - condition: time
+      before: 00:00:00
+      weekday:
+        - fri
+      after: 00:00:00
+    - condition: state
+      entity_id: automation.alarmclock_weekdays
+      state: "on"
+  action:
+    - delay:
+        hours: 0
+        minutes: 5
+        seconds: 0
+        milliseconds: 0
+    - service: automation.turn_off
+      data:
+        stop_actions: false
+      target:
+        entity_id: automation.alarmclock_weekdays
+  mode: single
+- id: "1674094560656"
+  alias: alarmClock_autoOn_sunday
+  description: turn off alarm used throughout week
+  trigger:
+    - platform: time
+      at: "19:00:00"
+  condition:
+    - condition: time
+      before: 00:00:00
+      weekday:
+        - sun
+      after: 00:00:00
+    - condition: state
+      entity_id: automation.alarmclock_weekdays
+      state: "off"
+  action:
+    - service: automation.turn_on
+      data: {}
+      target:
+        entity_id: automation.alarmclock_weekdays
+  mode: single
+- id: "1674274927393"
+  alias: door_alerts_front_door
+  description: ""
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.front_door_sensor_zse41
+      to: "on"
+      from: "off"
+  condition: []
+  action:
+    - service: script.important_announcement
+      data:
+        alexa_announcement: false
+        alexa_override: false
+        persistent_notification_toggle: true
+        phone_notification_toggle: true
+        sentry_mode_toggle: true
+        message_title: Sentry Alert
+        message: Front door opened.
+  mode: single
+- id: "1674328827879"
+  alias: door_alert_back_door
+  description: ""
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.back_door_sensor_zse41
+      to: "on"
+      from: "off"
+  condition: []
+  action:
+    - service: script.important_announcement
+      data:
+        alexa_announcement: false
+        alexa_override: false
+        persistent_notification_toggle: true
+        phone_notification_toggle: true
+        sentry_mode_toggle: true
+        message_title: Sentry Alert
+        message: Back door opened.
+  mode: single
+- id: "1674431276777"
+  alias: "Front Door Lock: Auto-Lock Standard"
+  description: ""
+  trigger:
+    - platform: time_pattern
+      hours: "*"
+      minutes: /1
+  condition:
+    - condition: state
+      entity_id: input_boolean.toggle_guest_mode
+      state: "off"
+    - condition: state
+      entity_id: lock.front_door_lock
+      state: unlocked
+      for:
+        hours: 0
+        minutes: 10
+        seconds: 0
+  action:
+    - service: automation.trigger
+      data:
+        skip_condition: false
+      target:
+        entity_id: automation.front_door_locking_protocol
+  mode: single
+- id: "1674710903468"
+  alias: input_datetime.time_bedtime_warning_final
+  description: ""
+  trigger:
+    - platform: time
+      at: input_datetime.input_datetime_time_bedtime_protocol_final_warning
+  condition:
+    - condition: state
+      entity_id: automation.alarmclock_weekdays
+      state: "on"
+    - condition: zone
+      entity_id: person.damon_jones
+      zone: zone.home_2
+    - condition: state
+      entity_id: input_boolean.toggle_guest_mode
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.toggle_dj_in_bed
+      state: "off"
+  action:
+    - service: script.important_announcement
+      data:
+        alexa_announcement: true
+        alexa_override: false
+        persistent_notification_toggle: true
+        phone_notification_toggle: true
+        message_title: Bedtime Protocol
+        message: Warning. T-Minus 10 minutes till Bedtime Protocol
+        sentry_mode_toggle: false
+    - service: script.1670440191524
+      data:
+        activation_announcement: "false"
+        interval: 5
+  mode: single
+- id: "1675098296132"
+  alias: Morning Lighting Control via Living Room Illuminance
+  description: ""
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.living_room_sensor_zse40_illuminance
+      above: 0.5
+  condition:
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: light.ca_lights
+          state: "on"
+      enabled: true
+    - condition: sun
+      after: sunrise
+      before: sunrise
+      before_offset: 00:01:00
+  action:
+    - service: light.turn_off
+      data: {}
+      target:
+        entity_id:
+          - light.lr_smart_lights
+          - light.wiz_rgbw_tunable_245b37
+          - light.kitchen_light_switch_zen72
+          - light.kn_sink_smart_lights
+          - light.dining_room_lamp
+          - light.kitchen_table_light
+          - light.foyer_light_switch_zen77
+    - service: script.important_announcement
+      data:
+        alexa_announcement: false
+        alexa_override: false
+        persistent_notification_toggle: true
+        phone_notification_toggle: true
+        message_title: "Illuminance "
+        message: Turning off lights as illuminance sensor has met threshold
+        sentry_mode_toggle: false
+  mode: single
+- id: "1675354480548"
+  alias: front_door_lock_confirmation
+  description: ""
+  trigger: []
+  condition:
+    - condition: state
+      entity_id: lock.front_door_lock
+      state: unlocked
+  action:
+    - choose:
+        - conditions:
+            - condition: device
+              device_id: 25656f8d3967a13bd2007ee9e38cd4a5
+              domain: lock
+              entity_id: lock.front_door_lock
+              type: is_unlocked
+            - condition: state
+              entity_id: binary_sensor.front_door_sensor_zse41
+              state: "off"
+          sequence:
+            - service: lock.lock
+              data: {}
+              target:
+                entity_id: lock.front_door_lock
+            - wait_for_trigger:
+                - platform: state
+                  entity_id:
+                    - lock.front_door_lock
+                  to: locked
+                  for:
+                    hours: 0
+                    minutes: 0
+                    seconds: 0
+              timeout:
+                hours: 0
+                minutes: 0
+                seconds: 9
+                milliseconds: 0
+            - delay:
+                hours: 0
+                minutes: 0
+                seconds: 9
+                milliseconds: 0
+              enabled: false
+            - choose:
+                - conditions:
+                    - condition: device
+                      device_id: 25656f8d3967a13bd2007ee9e38cd4a5
+                      domain: lock
+                      entity_id: lock.front_door_lock
+                      type: is_unlocked
+                  sequence:
+                    - service: script.important_announcement
+                      data:
+                        alexa_announcement: true
+                        alexa_override: false
+                        persistent_notification_toggle: true
+                        phone_notification_toggle: true
+                        message: Front door failed to lock.
+                        message_title: Sentry Alert
+                        sentry_mode_toggle: false
+                - conditions:
+                    - condition: device
+                      device_id: 25656f8d3967a13bd2007ee9e38cd4a5
+                      domain: lock
+                      entity_id: lock.front_door_lock
+                      type: is_locked
+                  sequence:
+                    - service: script.important_announcement
+                      data:
+                        alexa_announcement: false
+                        alexa_override: false
+                        persistent_notification_toggle: true
+                        phone_notification_toggle: true
+                        message_title: Sentry Alert
+                        message: Front Door Locked
+                        sentry_mode_toggle: true
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.front_door_sensor_zse41
+              state: "on"
+              for:
+                hours: 0
+                minutes: 0
+                seconds: 0
+            - condition: device
+              device_id: 25656f8d3967a13bd2007ee9e38cd4a5
+              domain: lock
+              entity_id: lock.front_door_lock
+              type: is_unlocked
+          sequence:
+            - service: script.important_announcement
+              data:
+                alexa_announcement: true
+                alexa_override: false
+                persistent_notification_toggle: true
+                phone_notification_toggle: true
+                message: Front door failed to lock. Front door is ajar.
+                sentry_mode_toggle: false
+                message_title: Sentry Alert
+  mode: single
+- id: "1675355013746"
+  alias: "Door Alert: Front Door Ajar"
+  description: ""
+  trigger:
+    - platform: time_pattern
+      hours: "*"
+      minutes: /5
+  condition:
+    - condition: state
+      entity_id: input_boolean.toggle_guest_mode
+      state: "off"
+    - condition: state
+      entity_id: binary_sensor.front_door_sensor_zse41
+      state: "on"
+      for:
+        hours: 0
+        minutes: 12
+        seconds: 0
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.front_door_sensor_zse41
+              state: "off"
+              for:
+                hours: 0
+                minutes: 10
+                seconds: 0
+          sequence:
+            - service: lock.lock
+              data: {}
+              target:
+                entity_id: lock.front_door_lock
+            - choose:
+                - conditions:
+                    - condition: device
+                      device_id: 25656f8d3967a13bd2007ee9e38cd4a5
+                      domain: lock
+                      entity_id: lock.front_door_lock
+                      type: is_unlocked
+                  sequence:
+                    - service: script.important_announcement
+                      data:
+                        alexa_announcement: true
+                        alexa_override: false
+                        persistent_notification_toggle: true
+                        phone_notification_toggle: true
+                        message: Front door auto-lock failed.
+                        message_title: Security Vulnerability Alert
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.front_door_sensor_zse41
+              state: "on"
+              for:
+                hours: 0
+                minutes: 10
+                seconds: 0
+          sequence:
+            - service: script.important_announcement
+              data:
+                alexa_announcement: true
+                alexa_override: false
+                persistent_notification_toggle: true
+                phone_notification_toggle: true
+                message_title: Security Vulnerability Alert
+                message: Front door auto-lock failed. Front door is ajar.
+      enabled: false
+    - service: automation.trigger
+      data: {}
+      target:
+        entity_id: automation.front_door_locking_protocol
+      enabled: false
+    - service: script.important_announcement
+      data:
+        alexa_announcement: true
+        alexa_override: false
+        persistent_notification_toggle: true
+        phone_notification_toggle: true
+        message_title: Security Vulnerability Alert
+        message: "Warning: Front Door has been left open"
+  mode: single
+- id: "1675355799542"
+  alias: "Door Alert: Back Door Ajar"
+  description: ""
+  trigger:
+    - platform: time_pattern
+      hours: "*"
+      minutes: /5
+  condition:
+    - condition: state
+      entity_id: input_boolean.toggle_guest_mode
+      state: "off"
+    - condition: state
+      entity_id: binary_sensor.back_door_sensor_zse41
+      state: "on"
+      for:
+        hours: 0
+        minutes: 12
+        seconds: 0
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.front_door_sensor_zse41
+              state: "off"
+              for:
+                hours: 0
+                minutes: 10
+                seconds: 0
+          sequence:
+            - service: lock.lock
+              data: {}
+              target:
+                entity_id: lock.front_door_lock
+            - choose:
+                - conditions:
+                    - condition: device
+                      device_id: 25656f8d3967a13bd2007ee9e38cd4a5
+                      domain: lock
+                      entity_id: lock.front_door_lock
+                      type: is_unlocked
+                  sequence:
+                    - service: script.important_announcement
+                      data:
+                        alexa_announcement: true
+                        alexa_override: false
+                        persistent_notification_toggle: true
+                        phone_notification_toggle: true
+                        message: Front door auto-lock failed.
+                        message_title: Security Vulnerability Alert
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.front_door_sensor_zse41
+              state: "on"
+              for:
+                hours: 0
+                minutes: 10
+                seconds: 0
+          sequence:
+            - service: script.important_announcement
+              data:
+                alexa_announcement: true
+                alexa_override: false
+                persistent_notification_toggle: true
+                phone_notification_toggle: true
+                message_title: Security Vulnerability Alert
+                message: Front door auto-lock failed. Front door is ajar.
+      enabled: false
+    - service: automation.trigger
+      data: {}
+      target:
+        entity_id: automation.front_door_locking_protocol
+      enabled: false
+    - service: script.important_announcement
+      data:
+        alexa_announcement: true
+        alexa_override: false
+        persistent_notification_toggle: true
+        phone_notification_toggle: true
+        message_title: Security Vulnerability Alert
+        message: "Warning: Back Door Ajar"
+  mode: single
+- id: "1675447769300"
+  alias: "Rose Guard: Armed"
+  description: ""
+  trigger:
+    - platform: state
+      entity_id:
+        - alarm_control_panel.rose_guard
+      to: armed_night
+      id: rose-guard-armed-night
+    - platform: state
+      entity_id:
+        - alarm_control_panel.rose_guard
+      to: armed_home
+      id: rose-guard-armed-home
+    - platform: state
+      entity_id:
+        - alarm_control_panel.rose_guard
+      to: armed_away
+      id: rose-guard-armed-away
+    - platform: state
+      entity_id:
+        - alarm_control_panel.rose_guard
+      to: armed_vacation
+  condition: []
+  action:
+    - if:
+        - condition: state
+          entity_id: input_boolean.toggle_rose_guard_door_access_status
+          state: "on"
+      then:
+        - service: light.turn_on
+          data:
+            rgb_color:
+              - 255
+              - 0
+              - 0
+            brightness_pct: 25
+          target:
+            entity_id: light.wiz_rgbw_tunable_4ce060
+          alias: red fireplace
+        - service: script.important_announcement
+          data:
+            alexa_announcement: false
+            alexa_override: false
+            persistent_notification_toggle: true
+            phone_notification_toggle: false
+            sentry_mode_toggle: false
+            message_title: Sentry Mode
+            message: Arming Home
+      else:
+        - service: alarm_control_panel.alarm_disarm
+          data:
+            code: !secret security_code
+          target:
+            entity_id: alarm_control_panel.rose_guard
+        - service: light.turn_on
+          data:
+            rgb_color:
+              - 251
+              - 255
+              - 0
+            color_temp: 406
+          target:
+            entity_id: light.wiz_rgbw_tunable_4ce060
+          alias: yellow fireplace
+        - stop: failed to arm
+      alias: Validate doors are secured; otherwise DISARM
+    - parallel:
+        - repeat:
+            count: "2"
+            sequence:
+              - service: light.turn_on
+                data:
+                  rgb_color:
+                    - 255
+                    - 0
+                    - 0
+                  brightness_pct: 50
+                target:
+                  entity_id: light.wiz_rgbw_tunable_4ce060
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 1
+                  milliseconds: 0
+              - service: light.turn_off
+                data: {}
+                target:
+                  entity_id: light.wiz_rgbw_tunable_4ce060
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 2
+                  milliseconds: 0
+        - service: automation.trigger
+          data: {}
+          target:
+            entity_id: automation.rose_guard_defense_protocol_1
+    - service: light.turn_on
+      data:
+        rgb_color:
+          - 255
+          - 0
+          - 0
+        brightness_pct: 45
+      target:
+        entity_id: light.wiz_rgbw_tunable_4ce060
+    - if:
+        - condition: trigger
+          id: rose-guard-armed-away
+      then:
+        - service: media_player.volume_set
+          data:
+            volume_level: 0.6
+          target:
+            entity_id:
+              - media_player.everywhere
+        - service: script.important_announcement
+          data:
+            alexa_announcement: false
+            alexa_override: false
+            persistent_notification_toggle: true
+            phone_notification_toggle: true
+            sentry_mode_toggle: true
+            message_title: Sentry Mode
+            message: Rose Guard Armed for Departure
+      alias: ARMED_AWAY
+    - if:
+        - condition: trigger
+          id: rose-guard-armed-night
+      then:
+        - service: media_player.volume_set
+          data:
+            volume_level: 0.6
+          target:
+            entity_id:
+              - media_player.everywhere
+        - service: script.important_announcement
+          data:
+            alexa_announcement: false
+            alexa_override: false
+            persistent_notification_toggle: true
+            phone_notification_toggle: true
+            sentry_mode_toggle: true
+            message_title: Sentry Mode
+            message: Rose Guard Armed for Bedtime
+      alias: announce ARMED_NIGHT
+    - if:
+        - condition: trigger
+          id: rose-guard-armed-home
+      then:
+        - service: media_player.volume_set
+          data:
+            volume_level: 0.6
+          target:
+            entity_id:
+              - media_player.everywhere
+        - service: script.important_announcement
+          data:
+            alexa_announcement: false
+            alexa_override: false
+            persistent_notification_toggle: true
+            phone_notification_toggle: true
+            sentry_mode_toggle: true
+            message_title: Sentry Mode
+            message: Sentry Mode Activated
+      alias: ARMED_HOME
+    - delay:
+        hours: 0
+        minutes: 0
+        seconds: 30
+        milliseconds: 0
+    - service: light.turn_on
+      data:
+        rgb_color:
+          - 255
+          - 0
+          - 0
+        brightness_pct: 6
+      target:
+        entity_id: light.wiz_rgbw_tunable_4ce060
+  mode: single
+- id: "1675448963737"
+  alias: "Motion Alert: Basement"
+  description: ""
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.basement_occupancy
+      to: "on"
+  condition: []
+  action:
+    - if:
+        - condition: state
+          entity_id: alarm_control_panel.rose_guard
+          state: armed_home
+        - condition: state
+          entity_id: input_boolean.toggle_rose_guard_interior_motion_triggers
+          state: "on"
+      then:
+        - service: script.important_announcement
+          data:
+            alexa_announcement: true
+            alexa_override: false
+            persistent_notification_toggle: true
+            phone_notification_toggle: true
+            message_title: Sentry Alert
+            message: Basement Motion Detected.
+      else:
+        - service: script.important_announcement
+          data:
+            alexa_announcement: false
+            alexa_override: false
+            persistent_notification_toggle: true
+            phone_notification_toggle: true
+            message_title: Sentry Alert
+            message: Basement Motion Detected.
+  mode: single
+- id: "1675450661789"
+  alias: "Rose Guard: Secure Home"
+  description: ""
+  trigger:
+    - platform: state
+      entity_id:
+        - alarm_control_panel.rose_guard
+      to: arming
+      id: rose-guard-arming
+  condition: []
+  action:
+    - service: automation.turn_on
+      data: {}
+      target:
+        entity_id:
+          - automation.front_door_locking_protocol
+          - automation.garage_door_autoclose_1hr
+      alias: Activate auto-lock & auto-close automations
+    - parallel:
+        - if:
+            - condition: device
+              device_id: 25656f8d3967a13bd2007ee9e38cd4a5
+              domain: lock
+              entity_id: lock.front_door_lock
+              type: is_unlocked
+          then:
+            - service: automation.trigger
+              data: {}
+              target:
+                entity_id: automation.front_door_locking_protocol
+            - wait_for_trigger:
+                - platform: state
+                  entity_id:
+                    - lock.front_door_lock
+                  to: locked
+              timeout:
+                hours: 0
+                minutes: 0
+                seconds: 10
+                milliseconds: 0
+          alias: Lock Door if Unlocked
+        - if:
+            - condition: state
+              entity_id: cover.garage_door
+              state: open
+              for:
+                hours: 0
+                minutes: 0
+                seconds: 10
+          then:
+            - service: cover.close_cover
+              data: {}
+              target:
+                entity_id: cover.garage_door
+            - delay:
+                hours: 0
+                minutes: 0
+                seconds: 8
+                milliseconds: 0
+              enabled: false
+            - wait_for_trigger:
+                - platform: state
+                  entity_id:
+                    - cover.garage_door
+                  to: closed
+              timeout:
+                hours: 0
+                minutes: 0
+                seconds: 8
+                milliseconds: 0
+          alias: Close Garage if Open
+    - if:
+        - condition: state
+          entity_id: input_boolean.toggle_rose_guard_door_access_status
+          state: "on"
+      then:
+        - service: script.important_announcement
+          data:
+            alexa_announcement: false
+            alexa_override: false
+            persistent_notification_toggle: true
+            phone_notification_toggle: false
+            message_title: Rose Guard
+            message: Lock-down successful
+            sentry_mode_toggle: false
+          enabled: true
+      else:
+        - service: script.important_announcement
+          data:
+            alexa_announcement: true
+            alexa_override: false
+            persistent_notification_toggle: true
+            phone_notification_toggle: true
+            message_title: Rose Guard
+            message: "Warning: lock-down procedure failed"
+            sentry_mode_toggle: false
+          enabled: true
+      alias: Confirm lock-down status; disarm Rose Guard if failed
+  mode: single
+- id: "1675451970648"
+  alias: "Front Door Lock: Unlock and Lock Protocol"
+  description: ""
+  trigger: []
+  condition: []
+  action:
+    - if:
+        - condition: device
+          device_id: 25656f8d3967a13bd2007ee9e38cd4a5
+          domain: lock
+          entity_id: lock.front_door_lock
+          type: is_locked
+      then:
+        - if:
+            - condition: or
+              conditions:
+                - condition: state
+                  entity_id: alarm_control_panel.rose_guard
+                  state: armed_away
+                - condition: state
+                  entity_id: alarm_control_panel.rose_guard
+                  state: armed_night
+          then:
+            - service: alarm_control_panel.alarm_arm_home
+              data:
+                code: !secret security_code
+              target:
+                entity_id: alarm_control_panel.rose_guard
+          alias: Disarm Rose Guard if Away/Night
+        - device_id: 25656f8d3967a13bd2007ee9e38cd4a5
+          domain: lock
+          entity_id: lock.front_door_lock
+          type: unlock
+        - service: script.important_announcement
+          data:
+            alexa_announcement: false
+            alexa_override: false
+            persistent_notification_toggle: true
+            phone_notification_toggle: true
+            sentry_mode_toggle: true
+            message_title: Rose Sentry
+            message: Door Unlocked
+      else:
+        - service: automation.trigger
+          data: {}
+          target:
+            entity_id: automation.front_door_locking_protocol
+  mode: single
+- id: "1675454433999"
+  alias: "Rose Guard: Disarmed"
+  description: ""
+  trigger:
+    - platform: state
+      entity_id:
+        - alarm_control_panel.rose_guard
+      to: disarmed
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
+  condition: []
+  action:
+    - service: light.turn_on
+      data:
+        rgb_color:
+          - 255
+          - 0
+          - 0
+        brightness_pct: 11
+      target:
+        entity_id: light.wiz_rgbw_tunable_4ce060
+      alias: Red fireplace
+    - service: input_boolean.turn_off
+      data: {}
+      target:
+        entity_id: input_boolean.toggle_rose_guard_interior_motion_triggers
+      alias: Toggle off interior motion announcements
+    - service: automation.turn_off
+      data: {}
+      target:
+        entity_id:
+          - automation.motion_alerts_living_room
+          - automation.motion_alert_basement
+      alias: Deactivate interior motion alerts
+      enabled: true
+    - service: switch.turn_off
+      data: {}
+      target:
+        entity_id:
+          - switch.living_room_cam_power
+          - switch.garage_cam_notifications
+          - switch.living_room_cam_notifications
+      alias: Deactivate Wyze cams
+    - service: automation.turn_off
+      data:
+        stop_actions: false
+      target:
+        entity_id: automation.front_door_lock_auto_lock_standard
+      alias: Deactivate front door auto-lock procedure
+    - type: turn_off
+      device_id: 1acc3bc40c9044785b07e156235a59ab
+      entity_id: light.wiz_rgbw_tunable_4ce060
+      domain: light
+      enabled: false
+    - service: script.important_announcement
+      data:
+        alexa_announcement: false
+        alexa_override: false
+        persistent_notification_toggle: true
+        phone_notification_toggle: true
+        message_title: Rose Guard
+        message: Rose Guard Disarmed
+        sentry_mode_toggle: true
+      alias: announce
+    - delay:
+        hours: 0
+        minutes: 0
+        seconds: 1
+        milliseconds: 0
+    - service: media_player.volume_set
+      data:
+        volume_level: 0.4
+      target:
+        entity_id: media_player.everywhere
+    - device_id: 1acc3bc40c9044785b07e156235a59ab
+      domain: number
+      entity_id: number.wiz_rgbw_tunable_4ce060_effect_speed
+      type: set_value
+      value: 10
+      enabled: false
+    - repeat:
+        count: "4"
+        sequence:
+          - service: light.turn_on
+            data:
+              rgb_color:
+                - 0
+                - 255
+                - 17
+              brightness_pct: 46
+            target:
+              entity_id: light.wiz_rgbw_tunable_4ce060
+            alias: Green
+          - delay:
+              hours: 0
+              minutes: 0
+              seconds: 0
+              milliseconds: 500
+          - service: light.turn_on
+            data:
+              rgb_color:
+                - 255
+                - 0
+                - 0
+              brightness_pct: 11
+            target:
+              entity_id: light.wiz_rgbw_tunable_4ce060
+            alias: red
+          - delay:
+              hours: 0
+              minutes: 0
+              seconds: 1
+              milliseconds: 500
+      alias: Flash fireplace lightss
+    - service: light.turn_on
+      data:
+        rgb_color:
+          - 0
+          - 255
+          - 4
+        brightness_pct: 50
+      target:
+        entity_id: light.wiz_rgbw_tunable_4ce060
+    - delay:
+        hours: 0
+        minutes: 0
+        seconds: 10
+        milliseconds: 0
+    - type: turn_off
+      device_id: 1acc3bc40c9044785b07e156235a59ab
+      entity_id: light.wiz_rgbw_tunable_4ce060
+      domain: light
+  mode: single
+- id: "1675457909010"
+  alias: "Rose Guard: Door Access State"
+  description: ""
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.back_door_sensor_zse41
+    - platform: state
+      entity_id:
+        - lock.front_door_lock
+    - platform: state
+      entity_id:
+        - binary_sensor.front_door_sensor_zse41
+    - platform: state
+      entity_id:
+        - cover.garage_door
+  condition: []
+  action:
+    - if:
+        - condition: state
+          entity_id: cover.garage_door
+          state: closed
+        - condition: state
+          entity_id: binary_sensor.front_door_sensor_zse41
+          state: "off"
+        - condition: state
+          entity_id: binary_sensor.back_door_sensor_zse41
+          state: "off"
+          for:
+            hours: 0
+            minutes: 0
+            seconds: 0
+        - condition: state
+          entity_id: lock.front_door_lock
+          state: locked
+      then:
+        - service: input_boolean.turn_on
+          data: {}
+          target:
+            entity_id: input_boolean.toggle_rose_guard_door_access_status
+      else:
+        - service: input_boolean.turn_off
+          data: {}
+          target:
+            entity_id: input_boolean.toggle_rose_guard_door_access_status
+  mode: single
+- id: "1675458584317"
+  alias: "Rose Guard: Defense Protocol 1"
+  description: ""
+  trigger: []
+  condition: []
+  action:
+    - service: media_player.volume_set
+      data:
+        volume_level: 0.8
+      target:
+        entity_id: media_player.everywhere
+    - service: automation.turn_on
+      data: {}
+      target:
+        entity_id:
+          - automation.garage_door_open_confirmation
+          - automation.garage_door_closure_confirmation
+          - automation.garage_door_open_alert
+          - automation.garage_door_autoclose_1hr
+      alias: Activate Garage Door Alerts
+    - service: automation.turn_on
+      data: {}
+      target:
+        entity_id:
+          - automation.door_alert_back_door
+          - automation.door_alert_front_door
+          - automation.door_alert_back_door_ajar
+          - automation.door_alert_front_door_ajar
+      alias: Activate Door Alerts
+    - service: automation.turn_on
+      data: {}
+      target:
+        entity_id:
+          - automation.motion_alert_driveway
+      alias: Activate Exterior Motion Alerts
+    - if:
+        - condition: state
+          entity_id: input_boolean.toggle_rose_guard_interior_motion_triggers
+          state: "on"
+      then:
+        - service: automation.turn_on
+          data: {}
+          target:
+            entity_id:
+              - automation.motion_alert_basement
+              - automation.motion_alerts_living_room
+      alias: Activate Interior Motion Alerts (toggled)
+    - service: switch.turn_on
+      data: {}
+      target:
+        entity_id:
+          - switch.living_room_cam_power
+          - switch.garage_cam_power
+          - switch.garage_cam_notifications
+      alias: Activate Wyze Cameras
+      enabled: true
+    - service: automation.turn_on
+      data: {}
+      target:
+        entity_id:
+          - automation.front_door_lock_auto_lock_standard
+          - automation.front_door_locking_protocol
+      alias: Activate Front Door Auto-Lock
+      enabled: true
+  mode: single
+- id: "1675467117646"
+  alias: "Rose Guard: Interior Motion Monitor"
+  description: ""
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.living_room_sensor_zse40_home_security_motion_detection
+    - platform: state
+      entity_id:
+        - binary_sensor.basement_occupancy
+      enabled: false
+  condition: []
+  action:
+    - if:
+        - condition: state
+          entity_id: binary_sensor.living_room_sensor_zse40_home_security_motion_detection
+          state: "off"
+        - condition: state
+          entity_id: binary_sensor.basement_occupancy
+          state: "off"
+          enabled: false
+      then:
+        - service: input_boolean.turn_on
+          data: {}
+          target:
+            entity_id:
+              - input_boolean.toggle_rose_guard_interior_motion_state
+      else:
+        - service: input_boolean.turn_off
+          data: {}
+          target:
+            entity_id:
+              - input_boolean.toggle_rose_guard_interior_motion_state
+  mode: single
+- &id001
+  id: "1675500211108"
+  alias: "Scene: Video Games"
+  description: ""
+  trigger: []
+  condition: []
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.scenes_alexa_annoucement
+              state: "on"
+          sequence:
+            - service: script.1669832041396
+              data:
+                alexa_entity: media_player.everywhere
+                message: .
+      default: []
+    - service: scene.turn_on
+      target:
+        entity_id: scene.bm_movie1
+      metadata: {}
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.toggle_guest_mode
+              state: "off"
+          sequence:
+            - service: light.turn_off
+              data: {}
+              target:
+                entity_id: light.private_area_lights
+      default: []
+    - service: media_player.turn_on
+      data: {}
+      target:
+        entity_id:
+          - media_player.playstation_4
+          - media_player.lg_webos_smart_tv
+    - wait_for_trigger:
+        - platform: device
+          device_id: 4588bcfa9de6fe66680ae0d72ea558c4
+          domain: media_player
+          entity_id: media_player.playstation_4
+          type: idle
+          for:
+            hours: 0
+            minutes: 0
+            seconds: 45
+      timeout:
+        hours: 0
+        minutes: 1
+        seconds: 0
+        milliseconds: 0
+    - service: media_player.select_source
+      data:
+        source: Grand Theft Auto V (PS4™)
+      target:
+        entity_id: media_player.playstation_4
+        device_id: 4588bcfa9de6fe66680ae0d72ea558c4
+    - if:
+        - condition: device
+          device_id: 4255068ece2a43a1d50d53b70e1f4f68
+          domain: media_player
+          entity_id: media_player.sonos_five
+          type: is_playing
+      then:
+        - service: media_player.media_pause
+          data: {}
+          target:
+            entity_id: media_player.sonos_five
+  mode: single
+- *id001
+- id: "1675503826360"
+  alias: "Scene: Zin"
+  description: ""
+  trigger: []
+  condition: []
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.scenes_alexa_annoucement
+              state: "on"
+          sequence:
+            - service: script.1669832041396
+              data:
+                alexa_entity: media_player.everywhere
+                message: .
+      default: []
+      enabled: false
+    - service: scene.turn_on
+      target:
+        entity_id: scene.ca_ocean
+      metadata: {}
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.toggle_guest_mode
+              state: "off"
+          sequence:
+            - service: light.turn_off
+              data: {}
+              target:
+                entity_id: light.private_area_lights
+      default: []
+    - if:
+        - condition: state
+          entity_id: media_player.sonos_five
+          state: paused
+      then:
+        - service: media_player.volume_set
+          data:
+            volume_level: 0.68
+          target:
+            entity_id: media_player.sonos_five
+        - service: media_player.play_media
+          target:
+            entity_id: media_player.sonos_five
+          data:
+            media_content_id: spotify://ab6127429f77d81d675c464884b3022d/spotify:playlist:37i9dQZF1DX1n9whBbBKoL
+            media_content_type: spotify://playlist
+          metadata:
+            title: Floating Through Space
+            thumbnail: https://i.scdn.co/image/ab67706f00000003293f5bac477b87de316e75aa
+            media_class: playlist
+            children_media_class: track
+            navigateIds:
+              - {}
+              - media_content_type: spotify://library
+                media_content_id: spotify://ab6127429f77d81d675c464884b3022d
+              - media_content_type: spotify://current_user_playlists
+                media_content_id: spotify://ab6127429f77d81d675c464884b3022d/current_user_playlists
+    - service: media_player.volume_set
+      data:
+        volume_level: 0.41
+      target:
+        entity_id: media_player.everywhere
+  mode: single
+- id: "1675504538446"
+  alias: "Scene: Jazzy"
+  description: ""
+  trigger: []
+  condition: []
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.scenes_alexa_annoucement
+              state: "on"
+          sequence:
+            - service: script.1669832041396
+              data:
+                alexa_entity: media_player.everywhere
+                message: .
+      default: []
+    - service: scene.turn_on
+      target:
+        entity_id: scene.ca_chill
+      metadata: {}
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.toggle_guest_mode
+              state: "off"
+          sequence:
+            - service: light.turn_off
+              data: {}
+              target:
+                entity_id: light.private_area_lights
+      default: []
+    - type: turn_on
+      device_id: 62b6ba280cd249ba70b02ab2ab7644f3
+      entity_id: light.plug1_socket_1
+      domain: light
+    - if:
+        - condition: state
+          entity_id: media_player.sonos_five
+          state: paused
+      then:
+        - service: media_player.volume_set
+          data:
+            volume_level: 0.4
+          target:
+            entity_id: media_player.sonos_five
+        - service: media_player.play_media
+          target:
+            entity_id: media_player.sonos_five
+          data:
+            media_content_id: spotify://ab6127429f77d81d675c464884b3022d/spotify:playlist:37i9dQZF1DWVqfgj8NZEp1
+            media_content_type: spotify://playlist
+          metadata:
+            title: Coffee Table Jazz
+            thumbnail: https://i.scdn.co/image/ab67706f000000033794fb85cbf0ee5d8c77e3d5
+            media_class: playlist
+            children_media_class: track
+            navigateIds:
+              - {}
+              - media_content_type: spotify://library
+                media_content_id: spotify://ab6127429f77d81d675c464884b3022d
+              - media_content_type: spotify://current_user_playlists
+                media_content_id: spotify://ab6127429f77d81d675c464884b3022d/current_user_playlists
+  mode: single
+- id: "1675624254720"
+  alias: "Rose Guard: Trigger Standard"
+  description: ""
+  trigger:
+    - platform: state
+      entity_id:
+        - input_boolean.toggle_rose_guard_door_access_status
+      from: "on"
+      to: "off"
+      id: door_trigger
+  condition:
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: alarm_control_panel.rose_guard
+          state: armed_away
+        - condition: state
+          entity_id: alarm_control_panel.rose_guard
+          state: armed_night
+        - condition: state
+          entity_id: alarm_control_panel.rose_guard
+          state: armed_vacation
+  action:
+    - service: script.important_announcement
+      data:
+        alexa_announcement: false
+        alexa_override: false
+        persistent_notification_toggle: true
+        phone_notification_toggle: true
+        message_title: Rose Guard
+        message: Breach detected.
+        sentry_mode_toggle: false
+    - if:
+        - condition: or
+          conditions:
+            - condition: state
+              entity_id: alarm_control_panel.rose_guard
+              state: armed_vacation
+            - condition: state
+              entity_id: alarm_control_panel.rose_guard
+              state: armed_away
+          alias: if alarm state is away or vacation
+        - condition: not
+          conditions:
+            - condition: zone
+              entity_id: person.damon_jones
+              zone: zone.neighborhood
+          alias: if damon is NOT in neighborhood
+        - condition: trigger
+          id: door_trigger
+      then:
+        - service: alarm_control_panel.alarm_trigger
+          data: {}
+          target:
+            entity_id: alarm_control_panel.rose_guard
+          alias: TRIGGER
+      alias: if alarm is away/vacation AND Damon is AWAY, TRIGGER ALARM
+      else: []
+    - if:
+        - condition: state
+          entity_id: alarm_control_panel.rose_guard
+          state: armed_night
+        - condition: trigger
+          id: door_trigger
+      then:
+        - service: alarm_control_panel.alarm_trigger
+          data: {}
+          target:
+            entity_id: alarm_control_panel.rose_guard
+          alias: TRIGGER
+      alias: if alarm is night AND Damon is HOME TRIGGER ALARM
+      else: []
+    - if:
+        - condition: not
+          conditions:
+            - condition: trigger
+              id: door_trigger
+      then:
+        - service: alarm_control_panel.alarm_trigger
+          data: {}
+          target:
+            entity_id: alarm_control_panel.rose_guard
+  mode: single
+- id: "1675717654700"
+  alias: Wakeup Routine
+  description: ""
+  trigger:
+    - platform: state
+      entity_id:
+        - input_boolean.toggle_dj_in_bed
+      from: "on"
+      to: "off"
+  condition:
+    - condition: zone
+      entity_id: person.damon_jones
+      zone: zone.home_2
+  action:
+    - service: input_boolean.turn_off
+      data: {}
+      target:
+        entity_id:
+          - input_boolean.toggle_dj_in_bed
+    - service: input_boolean.turn_on
+      data: {}
+      target:
+        entity_id: input_boolean.toggle_important_alexa_announcement
+    - if:
+        - condition: state
+          entity_id: input_boolean.toggle_guest_mode
+          state: "off"
+        - condition: state
+          entity_id: alarm_control_panel.rose_guard
+          state: armed_night
+      then:
+        - service: alarm_control_panel.alarm_arm_home
+          data:
+            code: !secret security_code
+          target:
+            entity_id: alarm_control_panel.rose_guard
+      else:
+        - service: automation.trigger
+          data: {}
+          target:
+            entity_id: automation.rose_guard_secure_home
+        - service: alarm_control_panel.alarm_disarm
+          data:
+            code: !secret security_code
+          target:
+            entity_id: alarm_control_panel.rose_guard
+      alias: Arm security system if guest mode off
+  mode: single
+- id: "1676405304414"
+  alias: "Rose Guard: Panic Button"
+  description: ""
+  trigger: []
+  condition:
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: alarm_control_panel.rose_guard
+          state: armed_away
+        - condition: state
+          entity_id: alarm_control_panel.rose_guard
+          state: armed_night
+        - condition: state
+          entity_id: alarm_control_panel.rose_guard
+          state: armed_vacation
+      enabled: false
+  action:
+    - service: script.important_announcement
+      data:
+        alexa_announcement: false
+        alexa_override: false
+        persistent_notification_toggle: true
+        phone_notification_toggle: true
+        message_title: Rose Guard
+        message: Panic Alarm Triggered
+        sentry_mode_toggle: false
+    - if:
+        - condition: or
+          conditions:
+            - condition: state
+              entity_id: alarm_control_panel.rose_guard
+              state: armed_vacation
+            - condition: state
+              entity_id: alarm_control_panel.rose_guard
+              state: armed_away
+          alias: if alarm state is away or vacation
+        - condition: not
+          conditions:
+            - condition: zone
+              entity_id: person.damon_jones
+              zone: zone.neighborhood
+          alias: if damon is NOT in neighborhood
+        - condition: trigger
+          id: door_trigger
+      then:
+        - service: alarm_control_panel.alarm_trigger
+          data: {}
+          target:
+            entity_id: alarm_control_panel.rose_guard
+          alias: TRIGGER
+      alias: if alarm is away/vacation AND Damon is AWAY, TRIGGER ALARM
+      else: []
+      enabled: false
+    - if:
+        - condition: state
+          entity_id: alarm_control_panel.rose_guard
+          state: armed_night
+        - condition: trigger
+          id: door_trigger
+      then:
+        - service: alarm_control_panel.alarm_trigger
+          data: {}
+          target:
+            entity_id: alarm_control_panel.rose_guard
+          alias: TRIGGER
+      alias: if alarm is night AND Damon is HOME TRIGGER ALARM
+      else: []
+      enabled: false
+    - if:
+        - condition: not
+          conditions:
+            - condition: trigger
+              id: door_trigger
+      then:
+        - service: alarm_control_panel.alarm_trigger
+          data: {}
+          target:
+            entity_id: alarm_control_panel.rose_guard
+      enabled: false
+    - service: alarm_control_panel.alarm_arm_custom_bypass
+      data: {}
+      target:
+        entity_id: alarm_control_panel.rose_guard
+    - service: alarm_control_panel.alarm_trigger
+      data: {}
+      target:
+        entity_id: alarm_control_panel.rose_guard
+  mode: single
