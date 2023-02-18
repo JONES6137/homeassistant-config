@@ -4,6 +4,8 @@ default_config:
 # theme related
 frontend:
   themes: !include_dir_merge_named themes
+  extra_module_url:
+    - /local/card-mod.js
 
 # Text to speech
 tts:
@@ -127,14 +129,26 @@ sensor:
 
   - platform: bhyve
 
+  # in sensor.yaml which is included in configuration.yaml
+  # Fake Sensor to give a blank for state-label in picture-elements card
+  # https://community.home-assistant.io/t/picture-element-text/319768
+  - platform: template
+    sensors:
+      blank_blank:
+        friendly_name: "Blank Blank"
+        value_template: " "
+
 template:
   - sensor:
       - name: "Time_14hr"
-        state: "{{ as_timestamp(states('sensor.date_time_iso')) | timestamp_custom(' %I:%M %p') | replace(' 0', '') }}"
-        icon: "mdi:calendar-clock"
+        state: "{{ as_timestamp(states('sensor.date_time_iso')) | timestamp_custom('%-I:%M %p')}}"
+        icon: "mdi:clock"
       - name: "Datetime_long"
-        state: "{{ as_timestamp(states('sensor.date_time_iso')) | timestamp_custom('%A %B %-d, %I:%M %p') }}"
+        state: "{{ as_timestamp(states('sensor.date_time_iso')) | timestamp_custom('%A, %B %-d  %-I:%M %p')}}"
         icon: "mdi:calendar-clock"
+      - name: "Date_long"
+        state: "{{ as_timestamp(states('sensor.date_time_iso')) | timestamp_custom('%A, %B %-d')}}"
+        icon: "mdi:calendar"
 
 binary_sensor:
   - platform: bhyve
@@ -430,4 +444,40 @@ switch:
             mdi:lightbulb-multiple
           {% else %}
             mdi:lightbulb-multiple-off-outline
+          {% endif %}
+
+  - platform: template
+    switches:
+      sentry_mode:
+        unique_id: "rose_guard_sentry_mode"
+        friendly_name: "Rose Guard: Sentry Mode"
+        value_template: >-
+          {% if 
+              is_state("alarm_control_panel.rose_guard", "armed_home")
+          %}
+            On
+
+          {% else %}
+            Off
+          {% endif %}
+        turn_on:
+          - service: alarm_control_panel.alarm_arm_home
+            data:
+              code: !secret security_code
+            target:
+              entity_id: alarm_control_panel.rose_guard
+        turn_off:
+          - service: alarm_control_panel.alarm_disarm
+            data:
+              code: !secret security_code
+            target:
+              entity_id: alarm_control_panel.rose_guard
+
+        icon_template: >-
+          {% if 
+              is_state("alarm_control_panel.rose_guard", "armed_home")
+          %}
+            mdi:shield-home
+          {% else %}
+            mdi:shield-off
           {% endif %}

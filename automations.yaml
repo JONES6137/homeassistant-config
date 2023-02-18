@@ -472,7 +472,7 @@
       domain: light
     - service: notify.mobile_app_dj_iphone_12
       data:
-        title: Garage Door Auto-Closing
+        title: Sentry Warning
         message: Garage Door has been open for more than 60 minutes.
     - choose:
         - conditions:
@@ -1108,7 +1108,7 @@
         persistent_notification_toggle: true
         phone_notification_toggle: true
         message: Garage door closed
-        message_title: Garage Door Notification
+        message_title: Sentry Alert
         sentry_mode_toggle: true
   mode: single
 - id: "1659817636719"
@@ -1138,7 +1138,7 @@
         alexa_override: false
         persistent_notification_toggle: true
         phone_notification_toggle: true
-        message_title: Garage Door Notification
+        message_title: Sentry Alert
         message: Garage Door Open
         sentry_mode_toggle: true
   mode: single
@@ -1301,7 +1301,7 @@
       domain: light
     - service: notify.mobile_app_dj_iphone_12
       data:
-        title: Garage Door Auto-Opening
+        title: Garage Door Auto-Open
         message: Garage Door auto-opening via motion trigger
     - service: cover.open_cover
       data: {}
@@ -3560,7 +3560,7 @@
                         persistent_notification_toggle: true
                         phone_notification_toggle: true
                         message: Front door auto-lock failed.
-                        message_title: Security Vulnerability Alert
+                        message_title: Sentry Warning
         - conditions:
             - condition: state
               entity_id: binary_sensor.front_door_sensor_zse41
@@ -3576,7 +3576,7 @@
                 alexa_override: false
                 persistent_notification_toggle: true
                 phone_notification_toggle: true
-                message_title: Security Vulnerability Alert
+                message_title: Sentry Warning
                 message: Front door auto-lock failed. Front door is ajar.
       enabled: false
     - service: automation.trigger
@@ -3590,7 +3590,7 @@
         alexa_override: false
         persistent_notification_toggle: true
         phone_notification_toggle: true
-        message_title: Security Vulnerability Alert
+        message_title: Sentry Warning
         message: "Warning: Front Door has been left open"
   mode: single
 - id: "1675355799542"
@@ -3641,7 +3641,7 @@
                         persistent_notification_toggle: true
                         phone_notification_toggle: true
                         message: Front door auto-lock failed.
-                        message_title: Security Vulnerability Alert
+                        message_title: Sentry Warning
         - conditions:
             - condition: state
               entity_id: binary_sensor.front_door_sensor_zse41
@@ -3657,7 +3657,7 @@
                 alexa_override: false
                 persistent_notification_toggle: true
                 phone_notification_toggle: true
-                message_title: Security Vulnerability Alert
+                message_title: Sentry Warning
                 message: Front door auto-lock failed. Front door is ajar.
       enabled: false
     - service: automation.trigger
@@ -3671,7 +3671,7 @@
         alexa_override: false
         persistent_notification_toggle: true
         phone_notification_toggle: true
-        message_title: Security Vulnerability Alert
+        message_title: Sentry Warning
         message: "Warning: Back Door Ajar"
   mode: single
 - id: "1675447769300"

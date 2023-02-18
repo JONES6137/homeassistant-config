@@ -74,6 +74,7 @@ govee_learning.yaml
 # !*.yaml
 !.gitignore
 !*.md
+*.jpg
 # Ignore folders.
 .storage
 .cloud
