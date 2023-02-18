@@ -270,7 +270,7 @@
       then:
         - service: alarm_control_panel.alarm_arm_away
           data:
-            code: !secret security_code
+            code: "6573"
           target:
             entity_id: alarm_control_panel.rose_guard
         - service: switch.turn_off
@@ -871,7 +871,7 @@
       then:
         - service: alarm_control_panel.alarm_disarm
           data:
-            code: !secret security_code
+            code: "6573"
           target:
             entity_id: alarm_control_panel.rose_guard
       alias: disarm rose guard
@@ -1176,7 +1176,7 @@
       dimmer_up_5x:
         - service: alarm_control_panel.alarm_trigger
           data:
-            code: !secret security_code
+            code: "6573"
           target:
             entity_id: alarm_control_panel.rose_guard
 - id: "1661271204290"
@@ -1232,7 +1232,7 @@
       dimmer_up_4x:
         - service: alarm_control_panel.alarm_disarm
           data:
-            code: !secret security_code
+            code: "6573"
           target:
             entity_id: alarm_control_panel.rose_guard
       dimmer_down_5x:
@@ -1619,7 +1619,7 @@
       then:
         - service: alarm_control_panel.alarm_arm_night
           data:
-            code: !secret security_code
+            code: "6573"
           target:
             entity_id: alarm_control_panel.rose_guard
       else:
@@ -2587,7 +2587,7 @@
   action:
     - service: alarm_control_panel.alarm_disarm
       data:
-        code: !secret security_code
+        code: "6573"
       target:
         entity_id: alarm_control_panel.rose_guard
     - if:
@@ -3726,7 +3726,7 @@
       else:
         - service: alarm_control_panel.alarm_disarm
           data:
-            code: !secret security_code
+            code: "6573"
           target:
             entity_id: alarm_control_panel.rose_guard
         - service: light.turn_on
@@ -4016,7 +4016,7 @@
           then:
             - service: alarm_control_panel.alarm_arm_home
               data:
-                code: !secret security_code
+                code: "6573"
               target:
                 entity_id: alarm_control_panel.rose_guard
           alias: Disarm Rose Guard if Away/Night
@@ -4638,7 +4638,7 @@
       then:
         - service: alarm_control_panel.alarm_arm_home
           data:
-            code: !secret security_code
+            code: "6573"
           target:
             entity_id: alarm_control_panel.rose_guard
       else:
@@ -4648,7 +4648,7 @@
             entity_id: automation.rose_guard_secure_home
         - service: alarm_control_panel.alarm_disarm
           data:
-            code: !secret security_code
+            code: "6573"
           target:
             entity_id: alarm_control_panel.rose_guard
       alias: Arm security system if guest mode off
