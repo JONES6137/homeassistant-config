@@ -10616,3 +10616,553 @@
   metadata:
     light.dining_room_lamp:
       entity_only: true
+- id: '1676715507828'
+  name: 'CA: Romance'
+  entities:
+    switch.deck_light_switch_zen21:
+      friendly_name: Deck Light Switch (zen21)
+      state: 'off'
+    light.govee_lights:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 9009
+      min_mireds: 111
+      max_mireds: 500
+      supported_color_modes:
+      - color_temp
+      - hs
+      icon: mdi:lightbulb-group
+      friendly_name: Govee Lights
+      supported_features: 0
+      color_mode: hs
+      brightness: 16
+      hs_color:
+      - 315.068
+      - 85.882
+      rgb_color:
+      - 255
+      - 36
+      - 200
+      xy_color:
+      - 0.46
+      - 0.195
+      entity_id:
+      - light.desk_light
+      - light.tv_light
+      state: 'on'
+    light.ca_dumb_lights:
+      supported_color_modes:
+      - onoff
+      entity_id:
+      - light.basement_light
+      - light.garage_lights
+      - light.gym_light
+      - light.plug1_socket_1
+      icon: mdi:lightbulb-group
+      friendly_name: Common Area Dumb Lights
+      supported_features: 0
+      state: 'off'
+    light.ca_dimmable_dumb_lights:
+      supported_color_modes:
+      - brightness
+      entity_id:
+      - light.my_bedroom_light
+      - light.office_light
+      - light.foyer_light_switch_zen77
+      - light.hallway_light_switch_zen72
+      - light.kitchen_light_switch_zen72
+      - light.kitchen_table_light
+      icon: mdi:lightbulb-group
+      friendly_name: Common Area Dimmable Dumb Lights
+      supported_features: 32
+      state: 'off'
+    light.wiz_rgbw_tunable_4ce060:
+      min_color_temp_kelvin: 2202
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 454
+      effect_list:
+      - Ocean
+      - Romance
+      - Sunset
+      - Party
+      - Fireplace
+      - Cozy
+      - Forest
+      - Pastel Colors
+      - Wake up
+      - Bedtime
+      - Warm White
+      - Daylight
+      - Cool white
+      - Night light
+      - Focus
+      - Relax
+      - True colors
+      - TV time
+      - Plantgrowth
+      - Spring
+      - Summer
+      - Fall
+      - Deepdive
+      - Jungle
+      - Mojito
+      - Club
+      - Christmas
+      - Halloween
+      - Candlelight
+      - Golden white
+      - Pulse
+      - Steampunk
+      - Rhythm
+      supported_color_modes:
+      - color_temp
+      - rgbw
+      icon: mdi:fireplace
+      friendly_name: Fireplace
+      supported_features: 4
+      color_mode: brightness
+      brightness: 255
+      effect: Fireplace
+      state: 'on'
+    number.wiz_rgbw_tunable_4ce060_effect_speed:
+      min: 10
+      max: 200
+      step: 1
+      mode: slider
+      icon: mdi:speedometer
+      friendly_name: Fireplace Effect Speed
+      state: '100.0'
+    light.lamp:
+      min_color_temp_kelvin: 2202
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 454
+      effect_list:
+      - Ocean
+      - Romance
+      - Sunset
+      - Party
+      - Fireplace
+      - Cozy
+      - Forest
+      - Pastel Colors
+      - Wake up
+      - Bedtime
+      - Warm White
+      - Daylight
+      - Cool white
+      - Night light
+      - Focus
+      - Relax
+      - True colors
+      - TV time
+      - Plantgrowth
+      - Spring
+      - Summer
+      - Fall
+      - Deepdive
+      - Jungle
+      - Mojito
+      - Club
+      - Christmas
+      - Halloween
+      - Candlelight
+      - Golden white
+      - Pulse
+      - Steampunk
+      - Rhythm
+      supported_color_modes:
+      - color_temp
+      - rgbww
+      color_mode: brightness
+      brightness: 92
+      effect: Romance
+      icon: mdi:floor-lamp-torchiere
+      friendly_name: Living Room Lamp
+      supported_features: 4
+      state: 'on'
+    light.lr_sconce_lights:
+      min_color_temp_kelvin: 2202
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 454
+      effect_list:
+      - Bedtime
+      - Candlelight
+      - Christmas
+      - Club
+      - Cool white
+      - Cozy
+      - Daylight
+      - Deepdive
+      - Fall
+      - Fireplace
+      - Focus
+      - Forest
+      - Golden white
+      - Halloween
+      - Jungle
+      - Mojito
+      - Night light
+      - Ocean
+      - Party
+      - Pastel Colors
+      - Plantgrowth
+      - Pulse
+      - Relax
+      - Rhythm
+      - Romance
+      - Spring
+      - Steampunk
+      - Summer
+      - Sunset
+      - TV time
+      - True colors
+      - Wake up
+      - Warm White
+      supported_color_modes:
+      - color_temp
+      - rgbw
+      entity_id:
+      - light.wiz_rgbw_tunable_453e0c
+      - light.wiz_rgbw_tunable_45d542
+      icon: mdi:wall-sconce
+      friendly_name: Living Room Sconce Lights
+      supported_features: 4
+      state: 'off'
+    light.wiz_rgbw_tunable_245cc9:
+      min_color_temp_kelvin: 2202
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 454
+      effect_list:
+      - Ocean
+      - Romance
+      - Sunset
+      - Party
+      - Fireplace
+      - Cozy
+      - Forest
+      - Pastel Colors
+      - Wake up
+      - Bedtime
+      - Warm White
+      - Daylight
+      - Cool white
+      - Night light
+      - Focus
+      - Relax
+      - True colors
+      - TV time
+      - Plantgrowth
+      - Spring
+      - Summer
+      - Fall
+      - Deepdive
+      - Jungle
+      - Mojito
+      - Club
+      - Christmas
+      - Halloween
+      - Candlelight
+      - Golden white
+      - Pulse
+      - Steampunk
+      - Rhythm
+      supported_color_modes:
+      - color_temp
+      - rgbw
+      color_mode: brightness
+      brightness: 163
+      effect: Romance
+      icon: mdi:lamp
+      friendly_name: My Bedroom Lamp
+      supported_features: 4
+      state: 'on'
+    light.kn_sink_smart_lights:
+      min_color_temp_kelvin: 2202
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 454
+      effect_list:
+      - Bedtime
+      - Candlelight
+      - Christmas
+      - Club
+      - Cool white
+      - Cozy
+      - Daylight
+      - Deepdive
+      - Fall
+      - Fireplace
+      - Focus
+      - Forest
+      - Golden white
+      - Halloween
+      - Jungle
+      - Mojito
+      - Night light
+      - Ocean
+      - Party
+      - Pastel Colors
+      - Plantgrowth
+      - Pulse
+      - Relax
+      - Rhythm
+      - Romance
+      - Spring
+      - Steampunk
+      - Summer
+      - Sunset
+      - TV time
+      - True colors
+      - Wake up
+      - Warm White
+      supported_color_modes:
+      - color_temp
+      - rgbw
+      entity_id:
+      - light.wiz_rgbw_tunable_0909fa
+      - light.wiz_rgbw_tunable_08ff19
+      icon: mdi:lightbulb-group
+      friendly_name: Kitchen Sink Lights
+      supported_features: 4
+      state: 'off'
+    light.dining_room_lamp:
+      min_color_temp_kelvin: 2202
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 454
+      effect_list:
+      - Ocean
+      - Romance
+      - Sunset
+      - Party
+      - Fireplace
+      - Cozy
+      - Forest
+      - Pastel Colors
+      - Wake up
+      - Bedtime
+      - Warm White
+      - Daylight
+      - Cool white
+      - Night light
+      - Focus
+      - Relax
+      - True colors
+      - TV time
+      - Plantgrowth
+      - Spring
+      - Summer
+      - Fall
+      - Deepdive
+      - Jungle
+      - Mojito
+      - Club
+      - Christmas
+      - Halloween
+      - Candlelight
+      - Golden white
+      - Pulse
+      - Steampunk
+      - Rhythm
+      supported_color_modes:
+      - color_temp
+      - rgbw
+      color_mode: rgbw
+      brightness: 138
+      friendly_name: Dining Room Lamp
+      supported_features: 4
+      hs_color:
+      - 313.882
+      - 100
+      rgb_color:
+      - 255
+      - 0
+      - 196
+      rgbw_color:
+      - 255
+      - 0
+      - 196
+      - 0
+      xy_color:
+      - 0.469
+      - 0.193
+      state: 'on'
+    light.wiz_rgbww_tunable_dfab4e:
+      min_color_temp_kelvin: 2202
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 454
+      effect_list:
+      - Ocean
+      - Romance
+      - Sunset
+      - Party
+      - Fireplace
+      - Cozy
+      - Forest
+      - Pastel Colors
+      - Wake up
+      - Bedtime
+      - Warm White
+      - Daylight
+      - Cool white
+      - Night light
+      - Focus
+      - Relax
+      - True colors
+      - TV time
+      - Plantgrowth
+      - Spring
+      - Summer
+      - Fall
+      - Deepdive
+      - Jungle
+      - Mojito
+      - Club
+      - Christmas
+      - Halloween
+      - Candlelight
+      - Golden white
+      - Pulse
+      - Steampunk
+      - Rhythm
+      supported_color_modes:
+      - color_temp
+      - rgbww
+      icon: mdi:lamp
+      friendly_name: Basement Lamp
+      supported_features: 4
+      color_mode: brightness
+      brightness: 250
+      effect: Romance
+      state: 'on'
+    light.wiz_rgbw_tunable_08d336:
+      min_color_temp_kelvin: 2202
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 454
+      effect_list:
+      - Ocean
+      - Romance
+      - Sunset
+      - Party
+      - Fireplace
+      - Cozy
+      - Forest
+      - Pastel Colors
+      - Wake up
+      - Bedtime
+      - Warm White
+      - Daylight
+      - Cool white
+      - Night light
+      - Focus
+      - Relax
+      - True colors
+      - TV time
+      - Plantgrowth
+      - Spring
+      - Summer
+      - Fall
+      - Deepdive
+      - Jungle
+      - Mojito
+      - Club
+      - Christmas
+      - Halloween
+      - Candlelight
+      - Golden white
+      - Pulse
+      - Steampunk
+      - Rhythm
+      supported_color_modes:
+      - color_temp
+      - rgbw
+      color_mode: rgbw
+      brightness: 138
+      icon: mdi:wall-sconce-outline
+      friendly_name: Bathroom Lamp
+      supported_features: 4
+      hs_color:
+      - 331.19
+      - 100
+      rgb_color:
+      - 252
+      - 0
+      - 121
+      rgbw_color:
+      - 252
+      - 0
+      - 121
+      - 0
+      xy_color:
+      - 0.588
+      - 0.248
+      state: 'on'
+    light.wiz_rgbw_tunable_245b37:
+      min_color_temp_kelvin: 2202
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 454
+      effect_list:
+      - Ocean
+      - Romance
+      - Sunset
+      - Party
+      - Fireplace
+      - Cozy
+      - Forest
+      - Pastel Colors
+      - Wake up
+      - Bedtime
+      - Warm White
+      - Daylight
+      - Cool white
+      - Night light
+      - Focus
+      - Relax
+      - True colors
+      - TV time
+      - Plantgrowth
+      - Spring
+      - Summer
+      - Fall
+      - Deepdive
+      - Jungle
+      - Mojito
+      - Club
+      - Christmas
+      - Halloween
+      - Candlelight
+      - Golden white
+      - Pulse
+      - Steampunk
+      - Rhythm
+      supported_color_modes:
+      - color_temp
+      - rgbw
+      icon: mdi:floor-lamp-torchiere
+      friendly_name: Office Lamp
+      supported_features: 4
+      state: 'off'
+  icon: mdi:robot-love-outline
+  metadata:
+    light.lamp:
+      entity_only: true
+    light.lr_sconce_lights:
+      entity_only: true
+    light.wiz_rgbw_tunable_245cc9:
+      entity_only: true
+    light.kn_sink_smart_lights:
+      entity_only: true
+    light.dining_room_lamp:
+      entity_only: true
+    light.wiz_rgbww_tunable_dfab4e:
+      entity_only: true
+    light.wiz_rgbw_tunable_08d336:
+      entity_only: true
+    light.wiz_rgbw_tunable_245b37:
+      entity_only: true

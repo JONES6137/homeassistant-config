@@ -15,6 +15,7 @@ tts:
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
+# automation secret: !include secret_automations.yaml
 
 python_script:
 
